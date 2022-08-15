@@ -1,5 +1,6 @@
 package ando.widget.pickerview.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -50,9 +51,7 @@ public class BasePickerView {
         this.context = context;
     }
 
-
     protected void initViews() {
-
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
 
@@ -104,7 +103,6 @@ public class BasePickerView {
     protected void initEvents() {
     }
 
-
     /**
      * @param v      (是通过哪个View弹出的)
      * @param isAnim 是否显示动画效果
@@ -123,7 +121,6 @@ public class BasePickerView {
         this.clickView = v;
         show();
     }
-
 
     /**
      * 添加View到根视图
@@ -154,7 +151,6 @@ public class BasePickerView {
         }
     }
 
-
     /**
      * 检测该View是不是已经添加到根视图
      *
@@ -166,7 +162,6 @@ public class BasePickerView {
         } else {
             return rootView.getParent() != null || isShowing;
         }
-
     }
 
     public void dismiss() {
@@ -201,12 +196,9 @@ public class BasePickerView {
             }
             dismissing = true;
         }
-
-
     }
 
     public void dismissImmediately() {
-
         mPickerOptions.decorView.post(new Runnable() {
             @Override
             public void run() {
@@ -219,8 +211,6 @@ public class BasePickerView {
                 }
             }
         });
-
-
     }
 
     private Animation getInAnimation() {
@@ -239,24 +229,23 @@ public class BasePickerView {
     }
 
     public void setKeyBackCancelable(boolean isCancelable) {
-
-        ViewGroup View;
+        ViewGroup group;
         if (isDialog()) {
-            View = dialogView;
+            group = dialogView;
         } else {
-            View = rootView;
+            group = rootView;
         }
 
-        View.setFocusable(isCancelable);
-        View.setFocusableInTouchMode(isCancelable);
+        group.setFocusable(isCancelable);
+        group.setFocusableInTouchMode(isCancelable);
         if (isCancelable) {
-            View.setOnKeyListener(onKeyBackListener);
+            group.setOnKeyListener(onKeyBackListener);
         } else {
-            View.setOnKeyListener(null);
+            group.setOnKeyListener(null);
         }
     }
 
-    private View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
+    private final View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {
@@ -268,7 +257,6 @@ public class BasePickerView {
     };
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
-
         if (rootView != null) {
             View view = rootView.findViewById(R.id.outmost_container);
 
@@ -278,7 +266,6 @@ public class BasePickerView {
                 view.setOnTouchListener(null);
             }
         }
-
         return this;
     }
 
@@ -291,11 +278,11 @@ public class BasePickerView {
         }
     }
 
-
     /**
      * Called when the user touch on black overlay, in order to dismiss the dialog.
      */
     private final View.OnTouchListener onCancelableTouchListener = new View.OnTouchListener() {
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -348,14 +335,11 @@ public class BasePickerView {
         return contentContainer;
     }
 
-
     public Dialog getDialog() {
         return mDialog;
     }
 
-
     public boolean isDialog() {
         return false;
     }
-
 }

@@ -570,7 +570,6 @@ public class WheelTime {
         }
     }
 
-
     private void setContentTextSize() {
         wv_day.setTextSize(textSize);
         wv_month.setTextSize(textSize);
@@ -579,7 +578,6 @@ public class WheelTime {
         wv_minutes.setTextSize(textSize);
         wv_seconds.setTextSize(textSize);
     }
-
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
         if (isLunarCalendar) {
@@ -616,7 +614,6 @@ public class WheelTime {
         } else {
             wv_seconds.setLabel(view.getContext().getString(R.string.pickerview_seconds));
         }
-
     }
 
     public void setTextXOffset(int x_offset_year, int x_offset_month, int x_offset_day,
@@ -631,8 +628,6 @@ public class WheelTime {
 
     /**
      * 设置是否循环滚动
-     *
-     * @param cyclic
      */
     public void setCyclic(boolean cyclic) {
         wv_year.setCyclic(cyclic);
@@ -680,11 +675,8 @@ public class WheelTime {
         return sb.toString();
     }
 
-
     /**
      * 农历返回对应的公历时间
-     *
-     * @return
      */
     private String getLunarTime() {
         StringBuilder sb = new StringBuilder();
@@ -734,7 +726,6 @@ public class WheelTime {
     public void setEndYear(int endYear) {
         this.endYear = endYear;
     }
-
 
     public void setRangDate(Calendar startDate, Calendar endDate) {
 
@@ -795,8 +786,6 @@ public class WheelTime {
 
     /**
      * 设置间距倍数,但是只能在1.0-4.0f之间
-     *
-     * @param lineSpacingMultiplier
      */
     public void setLineSpacingMultiplier(float lineSpacingMultiplier) {
         wv_day.setLineSpacingMultiplier(lineSpacingMultiplier);
@@ -809,8 +798,6 @@ public class WheelTime {
 
     /**
      * 设置分割线的颜色
-     *
-     * @param dividerColor
      */
     public void setDividerColor(int dividerColor) {
         wv_day.setDividerColor(dividerColor);
@@ -823,8 +810,6 @@ public class WheelTime {
 
     /**
      * 设置分割线的类型
-     *
-     * @param dividerType
      */
     public void setDividerType(WheelView.DividerType dividerType) {
         wv_day.setDividerType(dividerType);
@@ -837,8 +822,6 @@ public class WheelTime {
 
     /**
      * 设置分割线之间的文字的颜色
-     *
-     * @param textColorCenter
      */
     public void setTextColorCenter(int textColorCenter) {
         wv_day.setTextColorCenter(textColorCenter);
@@ -851,8 +834,6 @@ public class WheelTime {
 
     /**
      * 设置分割线以外文字的颜色
-     *
-     * @param textColorOut
      */
     public void setTextColorOut(int textColorOut) {
         wv_day.setTextColorOut(textColorOut);

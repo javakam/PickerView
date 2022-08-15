@@ -69,7 +69,6 @@ public class WheelView extends View {
     private int textXOffset;
     private float itemHeight;//每行高度
 
-
     private Typeface typeface = Typeface.MONOSPACE;//字体样式，默认是等宽字体
     private int textColorOut;
     private int textColorCenter;

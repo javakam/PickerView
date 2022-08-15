@@ -71,13 +71,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             btnSubmit.setTextSize(mPickerOptions.textSizeSubmitCancel);
             btnCancel.setTextSize(mPickerOptions.textSizeSubmitCancel);
             tvTitle.setTextSize(mPickerOptions.textSizeTitle);
-
         } else {
             mPickerOptions.customListener.customLayout(LayoutInflater.from(context).inflate(mPickerOptions.layoutRes, contentContainer));
         }
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
         timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
+        timePickerView.setPadding(mPickerOptions.content_padding_l,
+                mPickerOptions.content_padding_t,
+                mPickerOptions.content_padding_r,
+                mPickerOptions.content_padding_b);
 
         initWheelTime(timePickerView);
     }
@@ -145,7 +148,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.isCenterLabel(mPickerOptions.isCenterLabel);
     }
 
-
     /**
      * 设置默认时间
      */
@@ -210,10 +212,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = mPickerOptions.date.get(Calendar.MINUTE);
             seconds = mPickerOptions.date.get(Calendar.SECOND);
         }
-
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -280,7 +280,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     public boolean isLunarCalendar() {
         return wheelTime.isLunarMode();
     }
-
 
     @Override
     public boolean isDialog() {

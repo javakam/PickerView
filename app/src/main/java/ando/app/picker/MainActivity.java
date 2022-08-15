@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.btn_Time && pvTime != null) {
             // pvTime.setDate(Calendar.getInstance());
             /* pvTime.show(); //show timePicker*/
-            pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
+            pvTime.show(v, true);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
         } else if (v.getId() == R.id.btn_CustomOptions && pvCustomOptions != null) {
@@ -192,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
-
     private void initTimePicker() {//Dialog 模式下，在底部弹出
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -216,8 +215,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onCancelClickListener");
                     }
                 })
-                .setItemVisibleCount(5) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
-                .setLineSpacingMultiplier(2.0f)
+                .setItemVisibleCount(7) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
+                .setLineSpacingMultiplier(3.0f)
+                .setPadding(25, 0, 25, 0)
+                .setContentTextSize(17)
                 .isAlphaGradient(true)
                 .build();
 
