@@ -1,0 +1,4 @@
+rootProject.name = "PickerView"
+include ':app'
+include ':wheelview'
+include ':pickerview'

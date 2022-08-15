@@ -1,0 +1,15 @@
+ext {
+
+    config = [
+            applicationId    : "ando.app.picker",
+            compileSdkVersion: 30,
+            buildToolsVersion: '30.0.3',
+            minSdkVersion    : 14,
+            targetSdkVersion : 30,
+            versionCode      : 1,
+            versionName      : "1.0.0",
+            versionWheelView : "1.0.0",
+            versionPickerView: "1.0.0"
+    ]
+
+}
