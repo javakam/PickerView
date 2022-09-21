@@ -9,10 +9,9 @@ import ando.widget.wheelview.WheelAdapter;
  *
  * @param <T> the element type
  */
-public class ArrayWheelAdapter<T> implements WheelAdapter {
-
+public class ArrayWheelAdapter<T> implements WheelAdapter<Object> {
     // items
-    private List<T> items;
+    private final List<T> items;
 
     /**
      * Constructor

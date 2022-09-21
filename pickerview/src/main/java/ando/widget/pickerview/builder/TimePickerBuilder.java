@@ -17,7 +17,6 @@ import androidx.annotation.ColorInt;
 /**
  * Created by xiaosongzeem on 2018/3/20.
  */
-
 public class TimePickerBuilder {
 
     private final PickerOptions mPickerOptions;
@@ -32,6 +31,11 @@ public class TimePickerBuilder {
     //Option
     public TimePickerBuilder setGravity(int gravity) {
         mPickerOptions.textGravity = gravity;
+        return this;
+    }
+
+    public TimePickerBuilder setMinHeight(int minHeight) {
+        mPickerOptions.contentMinHeight = minHeight;
         return this;
     }
 

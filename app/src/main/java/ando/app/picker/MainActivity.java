@@ -243,10 +243,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initCustomTimePicker() {
-        /**
-         * @description
-         *
+        /*
          * 注意事项：
+         *
          * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针.
          * 具体可参考demo 里面的两个自定义layout布局。
          * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
@@ -254,9 +253,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2014, 1, 23);
+        startDate.set(2022, 8, 28, 15, 25, 35);
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2027, 2, 28);
+        endDate.set(2023, 2, 28, 11, 22, 33);
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -302,13 +301,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
-                .setContentTextSize(18)
-                .setType(new boolean[]{false, false, false, true, true, true})
+                .setContentTextSize(16)
+                .setType(new boolean[]{true, true, true, true, true, true})
                 .setLabel("年", "月", "日", "时", "分", "秒")
-                .setLineSpacingMultiplier(1.2f)
-                .setTextXOffset(0, 0, 0, 40, 0, -40)
+                .setLineSpacingMultiplier(2.2f)
+                //.setTextXOffset(0, 0, 0, 20, 0, -20)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(0xFF24AD9D)
+                .setPadding(15, 0, 15, 0)
+                .setMinHeight(550)
                 .build();
     }
 

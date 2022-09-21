@@ -77,6 +77,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
         timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
+        if (mPickerOptions.contentMinHeight > 0) {
+            timePickerView.setMinimumHeight(mPickerOptions.contentMinHeight);
+        }
         timePickerView.setPadding(mPickerOptions.content_padding_l,
                 mPickerOptions.content_padding_t,
                 mPickerOptions.content_padding_r,
@@ -162,7 +165,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void setRange() {
         wheelTime.setStartYear(mPickerOptions.startYear);
         wheelTime.setEndYear(mPickerOptions.endYear);
-
     }
 
     /**

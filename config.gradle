@@ -6,10 +6,10 @@ ext {
             buildToolsVersion: '30.0.3',
             minSdkVersion    : 14,
             targetSdkVersion : 30,
-            versionCode      : 1,
-            versionName      : "1.0.0",
-            versionWheelView : "1.1.0",
-            versionPickerView: "1.1.0"
+            versionCode      : 2,
+            versionName      : "1.2.0",
+            versionWheelView : "1.2.0",
+            versionPickerView: "1.2.0"
     ]
 
 }

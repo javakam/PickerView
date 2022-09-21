@@ -68,6 +68,7 @@ public class PickerOptions {
     public int x_offset_year, x_offset_month, x_offset_day, x_offset_hours, x_offset_minutes, x_offset_seconds;//单位
     //layout_basepickerview.xml content_container 内容间距
     public int content_padding_l, content_padding_t, content_padding_r, content_padding_b;
+    public int contentMinHeight = -1;//xml 默认是 150dp
 
     public PickerOptions(int buildType) {
         if (buildType == TYPE_PICKER_OPTIONS) {
