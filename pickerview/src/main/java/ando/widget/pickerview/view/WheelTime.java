@@ -581,6 +581,11 @@ public class WheelTime {
     private boolean isEndDay() {
         final boolean isEndDay;
         if (wv_day.getItemsCount() > 0) {
+            //todo 2022年9月23日 17:13:15
+            //同一天
+//            final int currentMonth = (wv_month.getCurrentItem() + startMonth);
+//            final int currentDay = (wv_day.getCurrentItem() + startDay);
+            //不是同一天...
             final int currentMonth = (wv_month.getCurrentItem() + 1);
             final int currentDay = (wv_day.getCurrentItem() + 1);
             isEndDay = (currentYear == endYear && currentMonth == endMonth && endDay == currentDay);

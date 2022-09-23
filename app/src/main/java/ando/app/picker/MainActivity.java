@@ -255,7 +255,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Calendar startDate = Calendar.getInstance();
         startDate.set(2022, 8, 28, 15, 25, 35);
         Calendar endDate = Calendar.getInstance();
+        //非同一天测试通过
         endDate.set(2023, 2, 5, 11, 22, 33);
+//        endDate.set(2022, 8, 28, 18, 28, 38);
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
