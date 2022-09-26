@@ -36,9 +36,7 @@ import ando.widget.pickerview.view.OptionsPickerView;
 import ando.widget.pickerview.view.TimePickerView;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
 
@@ -77,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
         Button btn_circle = (Button) findViewById(R.id.btn_circle);
 
-
         btn_Time.setOnClickListener(this);
         btn_Options.setOnClickListener(this);
         btn_CustomOptions.setOnClickListener(this);
@@ -89,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
         findViewById(R.id.btn_lunar).setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -163,14 +159,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, isChecked ? 1f : 1.1f);
                             }
                         });
-
                     }
 
-                    /**
+                    /*
                      * 公农历切换后调整宽
-                     * @param v
-                     * @param yearWeight
-                     * @param weight
                      */
                     private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
                         ViewGroup timePicker = (ViewGroup) v.findViewById(R.id.timepicker);
@@ -255,9 +247,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Calendar startDate = Calendar.getInstance();
         startDate.set(2022, 8, 28, 15, 25, 35);
         Calendar endDate = Calendar.getInstance();
-        //非同一天测试通过
-        endDate.set(2023, 2, 5, 11, 22, 33);
-//        endDate.set(2022, 8, 28, 18, 28, 38);
+
+        //2022年9月26日 15:55:06
+        endDate.set(2025, 2, 5, 11, 22, 33);//非同一天测试通过
+        //endDate.set(2022, 8, 30, 18, 28, 38);//同月不同天测试通过
+        //endDate.set(2022, 8, 28, 18, 28, 38);//同一天测试通过
+        //endDate.set(2022, 8, 28, 15, 28, 38);//同一天同一小时测试通过
+        //endDate.set(2022, 8, 28, 15, 25, 38);//同一天同一小时同一分钟测试通过
+
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -307,8 +304,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .setLabel("年", "月", "日", "时", "分", "秒")
                 .setLineSpacingMultiplier(2.2f)
-                //.setTextXOffset(0, 0, 0, 20, 0, -20)
+                .setTextXOffset(20, 0, 0, 0, 0, -20)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                //.isCyclic(true)
                 .setDividerColor(0xFF24AD9D)
                 .setPadding(15, 0, 15, 0)
                 .setMinHeight(550)
@@ -316,11 +314,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initOptionPicker() {//条件选择器初始化
-
-        /**
+        /*
          * 注意 ：如果是三级联动的数据(省市区等)，请参照 JsonDataActivity 类里面的写法。
          */
-
         pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -410,15 +406,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isDialog(true)
                 .setOutSideCancelable(false)
                 .build();
-
         pvCustomOptions.setPicker(cardItem);//添加数据
-
-
     }
 
     private void initNoLinkOptionsPicker() {// 不联动的多级选项
         pvNoLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
 
@@ -446,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        Log.d("getTime()", "choice date millis: " + date.getTime());
+        Log.d("123", "getTime() choice date millis: " + date.getTime());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
@@ -511,5 +503,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computer.add("Apple");
         computer.add("HP");
     }
-
 }

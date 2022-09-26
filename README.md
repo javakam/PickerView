@@ -1,5 +1,7 @@
 # PickerView
 
+> ✨ 自己动手丰衣足食
+
 1. 修改自: <https://github.com/Bigkoo/Android-PickerView>
 
 2. 引入
@@ -21,6 +23,7 @@ implementation 'com.github.javakam:widget.pickerview:1.2.0@aar'
 - 支持 androidx
 - setPadding(l,t,r,b) 新增内容视图调整上下左右边距
 - setRangDate(startDate, endDate) 现支持"年,月,日,时,分,秒"的限定, 原版仅支持"年月日"
+- 关闭了默认的数字文本缩放效果: WheelView.initPaints -> paintCenterText.setTextScaleX(1.1F) -> 1.0F
 
 ## 使用说明(基本没做改变)
 
