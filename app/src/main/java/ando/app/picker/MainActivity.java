@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
 
+    private Button btn_Time;
     private Button btn_Options;
     private Button btn_CustomOptions;
     private Button btn_CustomTime;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initCustomOptionPicker();
         initNoLinkOptionsPicker();
 
-        Button btn_Time = (Button) findViewById(R.id.btn_Time);
+        btn_Time = (Button) findViewById(R.id.btn_Time);
         btn_Options = (Button) findViewById(R.id.btn_Options);
         btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
         btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
@@ -185,12 +186,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initTimePicker() {//Dialog 模式下，在底部弹出
+//        Calendar startDate = Calendar.getInstance();
+//        startDate.set(2022, 8, 28);
+//        Calendar endDate = Calendar.getInstance();
+//        endDate.set(2023, 0, 1);
+        /*
+        2022年9月27日 13:58:42
+        注: Calendar.set 时未设置的变量, 如"小时"字段, 系统默认赋予当前时间的"小时"。所以, 当需要限定到"时分秒"
+        时, Calendar.set 和 setType(new boolean[]{...}) 必须要对应上
+         */
+//        Log.i("123", "initTimePicker=" + endDate.get(Calendar.HOUR_OF_DAY));
+
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
+                btn_Time.setText(getTime(date));
                 Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
                 Log.i("pvTime", "onTimeSelect");
-
             }
         })
                 .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
@@ -199,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
+                //.setRangDate(startDate, endDate)
                 .setType(new boolean[]{true, true, true, true, true, false})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .addOnCancelClickListener(new View.OnClickListener() {
@@ -208,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .setItemVisibleCount(7) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
-                .setLineSpacingMultiplier(3.0f)
+                .setLineSpacingMultiplier(2.5f)
                 .setPadding(25, 0, 25, 0)
                 .setContentTextSize(17)
                 .isAlphaGradient(true)
@@ -277,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                 /*.animGravity(Gravity.RIGHT)// default is center*/
-                .setDate(selectedDate)
+//                .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 

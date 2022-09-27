@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="pickerview_cancel">取消</string>
     <string name="pickerview_submit">确定</string>
     <string name="pickerview_year">年</string>

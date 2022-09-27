@@ -347,9 +347,9 @@ public class WheelTime {
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setGravity(gravity);
 
-        resetHour(true, true);
-        resetMinute(true, false);
-        resetSecond(true, false);
+        resetHour(true, h);
+        resetMinute(true, m);
+        resetSecond(true, s);
 
         // 添加"年"监听
         wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -474,13 +474,11 @@ public class WheelTime {
         wv_day.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                //比如顶部为"28"日, 再次触摸向上滑动, 还会触发一次 onItemSelected 该事件, 需要屏蔽掉
                 final boolean isStartDay = (isStartMonth() && (startDay > 0 && index == 0));//0->startDay
-                final boolean isEndDay = isEndDay();
                 //Log.i("123", "wv_day: isStartDay=" + isStartDay + " ; isEndDay=" + isEndDay);
-                resetHour(isStartDay, isEndDay);
-                resetMinute(isStartDay, isEndDay);
-                resetSecond(isStartDay, isEndDay);
+                resetHour(isStartDay, h);
+                resetMinute(isStartDay, m);
+                resetSecond(isStartDay, s);
             }
         });
         // 添加"时"监听
@@ -488,14 +486,13 @@ public class WheelTime {
             @Override
             public void onItemSelected(int index) {
                 final boolean isStartDayHour = (isStartDay() && (startHour > 0 && index == 0));//0->startHour
-                final boolean isEndDay = isEndDay();
 //                Log.i("123", "wv_hours: isStartDayHour=" + isStartDayHour + " ; isEndDay=" + isEndDay +
 //                        " ; index=" + index +
 //                        " ; startYear=" + startYear + "; startMonth=" + startMonth + " ; startDay=" + startDay +
 //                        " ; startHour=" + startHour + "; startMinute=" + startMinute + " ; startSecond=" + startSecond +
 //                        " ; year=" + year + " _ (month+1)=" + (month + 1) + " _ day=" + day + " _ " + h + " _ " + m + " _ " + s);
-                resetMinute(isStartDayHour, isEndDay);
-                resetSecond(isStartDayHour, isEndDay);// resetSecond(isStartDayHourMinute(year, month, day, h, m));
+                resetMinute(isStartDayHour, m);
+                resetSecond(isStartDayHour, s);
             }
         });
         // 添加"分"监听
@@ -503,8 +500,7 @@ public class WheelTime {
             @Override
             public void onItemSelected(int index) {
                 final boolean isStartDayHourMinute = (isStartDayHour() && (startMinute > 0 && index == 0));//0->startMinute
-                //Log.i("123", "wv_minutes: isStartDayHourMinute=" + isStartDayHourMinute + " ; index=" + index);
-                resetSecond(isStartDayHourMinute, isEndDay());
+                resetSecond(isStartDayHourMinute, s);
             }
         });
 
@@ -541,7 +537,6 @@ public class WheelTime {
         } else {
             isStartDay = true;
         }
-        //Log.w("123", "isStartDay=" + isStartDay);
         return isStartDay;
     }
 
@@ -553,7 +548,6 @@ public class WheelTime {
         } else {
             isStartDayHour = true;
         }
-        //Log.w("123", "isStartDayHour=" + isStartDayHour);
         return isStartDayHour;
     }
 
@@ -565,7 +559,6 @@ public class WheelTime {
         } else {
             isStartDayHourMinute = true;
         }
-        //Log.w("123", "isStartDayHourMinute=" + isStartDayHourMinute);
         return isStartDayHourMinute;
     }
 
@@ -586,8 +579,6 @@ public class WheelTime {
         } else {
             isEndDay = true;
         }
-//        Log.e("123", "isStartDay=" + isStartDay() + " ; isEndDay=" + isEndDay +
-//                " ; currentMonth=" + currentMonth + " ; currentDay=" + currentDay);
         return isEndDay;
     }
 
@@ -598,7 +589,6 @@ public class WheelTime {
         } else {
             return true;
         }
-        //Log.e("123", "isEndDayHour=" + (isEndDay() && hour == endHour));
         return (isEndDay() && hour == endHour);
     }
 
@@ -609,19 +599,27 @@ public class WheelTime {
         } else {
             return true;
         }
-        //Log.e("123", "isEndDayHourMinute=" + (isEndDayHour() && minute == endMinute));
         return (isEndDayHour() && minute == endMinute);
     }
 
-    private void resetHour(boolean isStartDay, boolean isEndDay) {
+    private void resetHour(boolean isStartDay, int h) {
+        final boolean isEndDay = isEndDay();
         int realEndHour = isEndDay ? endHour : 23;
         final NumericWheelAdapter adapter;
         if (isStartDay) {
-            if (startHour > realEndHour || realEndHour == 0) {
+            //没有设置起始和结束小时, 说明是默认的 System.currentTimeMillions
+            final boolean isNoRangeHour = (startHour == 0 && endHour == 0);
+            final int realStartHour = isNoRangeHour ? 0 : startHour;
+            if (realStartHour > realEndHour || realEndHour == 0 || isNoRangeHour) {
                 realEndHour = 23;
             }
-            adapter = new NumericWheelAdapter(startHour, realEndHour);
-            wv_hours.setCurrentItem(Math.min(wv_hours.getCurrentItem(), startHour));
+//            Log.e("123", "isStartDay=" + isStartDay() + " ; isEndDay=" + isEndDay +
+//                    " ; realStartHour=" + realStartHour + " ; realEndHour=" + realEndHour +
+//                    " ; startHour=" + startHour + " ; endHour=" + endHour +
+//                    " ; startMinute=" + startMinute + " ; endMinute=" + endMinute +
+//                    " ; startSecond=" + startSecond + " ; endSecond=" + endSecond);
+            adapter = new NumericWheelAdapter(realStartHour, realEndHour);
+            wv_hours.setCurrentItem(isNoRangeHour ? h : Math.min(wv_hours.getCurrentItem(), realStartHour));
         } else if (isEndDay) {
             adapter = new NumericWheelAdapter(0, realEndHour);
             wv_hours.setCurrentItem(Math.min(wv_hours.getCurrentItem(), realEndHour));
@@ -632,16 +630,19 @@ public class WheelTime {
         wv_hours.setAdapter(adapter);
     }
 
-    private void resetMinute(boolean isStartDayHour, boolean isEndDay) {
-        int realEndMinute = isEndDayHour() ? endMinute : 59;
+    private void resetMinute(boolean isStartDayHour, int m) {
+        final boolean isEndDayHour = isEndDayHour();
+        int realEndMinute = isEndDayHour ? endMinute : 59;
         final NumericWheelAdapter adapter;
         if (isStartDayHour) {
-            if (startMinute > realEndMinute || realEndMinute == 0) {
+            final boolean isNoRangeHourMinute = (startMinute == 0 && endMinute == 0);
+            final int realStartHourMinute = isNoRangeHourMinute ? 0 : startMinute;
+            if (realStartHourMinute > realEndMinute || realEndMinute == 0 || isNoRangeHourMinute) {
                 realEndMinute = 59;
             }
-            adapter = new NumericWheelAdapter(startMinute, realEndMinute);
-            wv_minutes.setCurrentItem(Math.min(wv_minutes.getCurrentItem(), startMinute));
-        } else if (isEndDay) {
+            adapter = new NumericWheelAdapter(realStartHourMinute, realEndMinute);
+            wv_minutes.setCurrentItem(isNoRangeHourMinute ? m : Math.min(wv_minutes.getCurrentItem(), realStartHourMinute));
+        } else if (isEndDayHour) {
             adapter = new NumericWheelAdapter(0, realEndMinute);
             wv_minutes.setCurrentItem(Math.min(wv_minutes.getCurrentItem(), realEndMinute));
         } else {
@@ -650,16 +651,19 @@ public class WheelTime {
         wv_minutes.setAdapter(adapter);
     }
 
-    private void resetSecond(boolean isStartDayHourMinutes, boolean isEndDay) {
+    private void resetSecond(boolean isStartDayHourMinutes, int s) {
+        final boolean isEndDayHourMinute = isEndDayHourMinute();
         int realEndSecond = isEndDayHourMinute() ? endSecond : 59;
         final NumericWheelAdapter adapter;
         if (isStartDayHourMinutes) {//startSecond > 0
-            if (startSecond > realEndSecond || realEndSecond == 0) {
+            final boolean isNoRangeHourMinuteSecond = (startSecond == 0 && endSecond == 0);
+            final int realStartHourMinuteSecond = isNoRangeHourMinuteSecond ? 0 : startSecond;
+            if (realStartHourMinuteSecond > realEndSecond || realEndSecond == 0 || isNoRangeHourMinuteSecond) {
                 realEndSecond = 59;
             }
-            adapter = new NumericWheelAdapter(startSecond, realEndSecond);
-            wv_seconds.setCurrentItem(Math.min(wv_seconds.getCurrentItem(), startSecond));
-        } else if (isEndDay) {
+            adapter = new NumericWheelAdapter(realStartHourMinuteSecond, realEndSecond);
+            wv_seconds.setCurrentItem(isNoRangeHourMinuteSecond ? s : Math.min(wv_seconds.getCurrentItem(), realStartHourMinuteSecond));
+        } else if (isEndDayHourMinute) {
             adapter = new NumericWheelAdapter(0, realEndSecond);
             wv_seconds.setCurrentItem(Math.min(wv_seconds.getCurrentItem(), realEndSecond));
         } else {
@@ -708,22 +712,19 @@ public class WheelTime {
             }
             wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
         }
-
         if (currentItem > wv_day.getAdapter().getItemsCount() - 1) {
             currentItem = wv_day.getAdapter().getItemsCount() - 1;
             wv_day.setCurrentItem(currentItem);
         }
-
         setReHourMinuteSecond();
     }
 
     private void setReHourMinuteSecond() {
         final boolean isStartDay = isStartDay();
-        final boolean isEndDay = isEndDay();
         //Log.i("123", "setReHourMinuteSecond: isStartDay=" + isStartDay + " ; isEndDay=" + isEndDay);
-        resetHour(isStartDay, isEndDay);
-        resetMinute(isStartDay, isEndDay);
-        resetSecond(isStartDay, isEndDay);
+        resetHour(isStartDay, 0);
+        resetMinute(isStartDay, 0);
+        resetSecond(isStartDay, 0);
     }
 
     private void setContentTextSize() {
@@ -805,25 +806,37 @@ public class WheelTime {
             if ((wv_month.getCurrentItem() + startMonth) == startMonth) {
                 sb.append((wv_year.getCurrentItem() + startYear)).append("-")
                         .append((wv_month.getCurrentItem() + startMonth)).append("-")
-                        .append((wv_day.getCurrentItem() + startDay)).append(" ")
-                        .append(wv_hours.getCurrentItemValue()).append(":")
-                        .append(wv_minutes.getCurrentItemValue()).append(":")
-                        .append(wv_seconds.getCurrentItemValue());
+                        .append((wv_day.getCurrentItem() + startDay));
             } else {
                 sb.append((wv_year.getCurrentItem() + startYear)).append("-")
                         .append((wv_month.getCurrentItem() + startMonth)).append("-")
-                        .append((wv_day.getCurrentItem() + 1)).append(" ")
-                        .append(wv_hours.getCurrentItemValue()).append(":")
-                        .append(wv_minutes.getCurrentItemValue()).append(":")
-                        .append(wv_seconds.getCurrentItemValue());
+                        .append((wv_day.getCurrentItem() + 1));
             }
         } else {
             sb.append((wv_year.getCurrentItem() + startYear)).append("-")
                     .append((wv_month.getCurrentItem() + 1)).append("-")
-                    .append((wv_day.getCurrentItem() + 1)).append(" ")
-                    .append(wv_hours.getCurrentItemValue()).append(":")
-                    .append(wv_minutes.getCurrentItemValue()).append(":")
-                    .append(wv_seconds.getCurrentItemValue());
+                    .append((wv_day.getCurrentItem() + 1));
+        }
+
+        sb.append(" ");
+        if (type[3]) {
+            sb.append(wv_hours.getCurrentItemValue());
+        } else {
+            sb.append("00");
+        }
+        sb.append(":");
+
+        if (type[4]) {
+            sb.append(wv_minutes.getCurrentItemValue());
+        } else {
+            sb.append("00");
+        }
+        sb.append(":");
+
+        if (type[5]) {
+            sb.append(wv_seconds.getCurrentItemValue());
+        } else {
+            sb.append("00");
         }
         return sb.toString();
     }
@@ -853,10 +866,28 @@ public class WheelTime {
 
         sb.append(solar[0]).append("-")
                 .append(solar[1]).append("-")
-                .append(solar[2]).append(" ")
-                .append(wv_hours.getCurrentItemValue()).append(":")
-                .append(wv_minutes.getCurrentItemValue()).append(":")
-                .append(wv_seconds.getCurrentItemValue());
+                .append(solar[2]);
+
+        sb.append(" ");
+        if (type[3]) {
+            sb.append(wv_hours.getCurrentItemValue());
+        } else {
+            sb.append("00");
+        }
+        sb.append(":");
+
+        if (type[4]) {
+            sb.append(wv_minutes.getCurrentItemValue());
+        } else {
+            sb.append("00");
+        }
+        sb.append(":");
+
+        if (type[5]) {
+            sb.append(wv_seconds.getCurrentItemValue());
+        } else {
+            sb.append("00");
+        }
         return sb.toString();
     }
 
