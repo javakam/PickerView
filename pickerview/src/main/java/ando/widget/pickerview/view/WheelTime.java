@@ -475,7 +475,6 @@ public class WheelTime {
             @Override
             public void onItemSelected(int index) {
                 final boolean isStartDay = (isStartMonth() && (startDay > 0 && index == 0));//0->startDay
-                //Log.i("123", "wv_day: isStartDay=" + isStartDay + " ; isEndDay=" + isEndDay);
                 resetHour(isStartDay, h);
                 resetMinute(isStartDay, m);
                 resetSecond(isStartDay, s);
@@ -486,11 +485,6 @@ public class WheelTime {
             @Override
             public void onItemSelected(int index) {
                 final boolean isStartDayHour = (isStartDay() && (startHour > 0 && index == 0));//0->startHour
-//                Log.i("123", "wv_hours: isStartDayHour=" + isStartDayHour + " ; isEndDay=" + isEndDay +
-//                        " ; index=" + index +
-//                        " ; startYear=" + startYear + "; startMonth=" + startMonth + " ; startDay=" + startDay +
-//                        " ; startHour=" + startHour + "; startMinute=" + startMinute + " ; startSecond=" + startSecond +
-//                        " ; year=" + year + " _ (month+1)=" + (month + 1) + " _ day=" + day + " _ " + h + " _ " + m + " _ " + s);
                 resetMinute(isStartDayHour, m);
                 resetSecond(isStartDayHour, s);
             }
@@ -517,89 +511,52 @@ public class WheelTime {
     }
 
     private boolean isStartMonth() {
-        final int currentMonth = (wv_month.getCurrentItem() + startMonth);
-        final boolean isStartMonth;
+        boolean isStartMonth = false;
         if (wv_month.getItemsCount() > 0) {
+            final int currentMonth = (wv_month.getCurrentItem() + startMonth);
             isStartMonth = (currentYear == startYear && startMonth == currentMonth);
-        } else {
-            isStartMonth = true;
         }
-        //Log.w("123", "isStartMonth=" + isStartMonth);
         return isStartMonth;
     }
 
     private boolean isStartDay() {
-        final boolean isStartDay;
+        boolean isStartDay = false;
         if (wv_day.getItemsCount() > 0) {
-            //用下面方式也可以 wv_day.getCurrentItemValueInt();
+            //或者 wv_day.getCurrentItemValueInt();
             final int currentDay = (wv_day.getCurrentItem() + startDay);
             isStartDay = (isStartMonth() && currentDay == startDay);
-        } else {
-            isStartDay = true;
         }
         return isStartDay;
     }
 
     private boolean isStartDayHour() {
-        final boolean isStartDayHour;
+        boolean isStartDayHour = false;
         if (wv_hours.getItemsCount() > 0) {
             final int currentDayHour = (wv_hours.getCurrentItem() + startHour);
             isStartDayHour = (isStartDay() && currentDayHour == startHour);
-        } else {
-            isStartDayHour = true;
         }
         return isStartDayHour;
     }
 
     private boolean isStartDayHourMinute() {
-        final boolean isStartDayHourMinute;
+        boolean isStartDayHourMinute = false;
         if (wv_minutes.getItemsCount() > 0) {
             final int currentDayHourMinute = (wv_minutes.getCurrentItem() + startMinute);
             isStartDayHourMinute = (isStartDayHour() && currentDayHourMinute == startMinute);
-        } else {
-            isStartDayHourMinute = true;
         }
         return isStartDayHourMinute;
     }
 
     private boolean isEndDay() {
-        final boolean isEndMonth;
-        int currentMonth = 0;
-        if (wv_month.getItemsCount() > 0) {
-            currentMonth = wv_month.getCurrentItemValueInt();
-            isEndMonth = (currentMonth == endMonth);
-        } else {
-            isEndMonth = true;
-        }
-        final boolean isEndDay;
-        int currentDay = 0;
-        if (wv_day.getItemsCount() > 0) {
-            currentDay = wv_day.getCurrentItemValueInt();
-            isEndDay = (currentYear == endYear && isEndMonth && endDay == currentDay);
-        } else {
-            isEndDay = true;
-        }
-        return isEndDay;
+        return (currentYear == endYear && wv_month.getCurrentItemValueInt() == endMonth && wv_day.getCurrentItemValueInt() == endDay);
     }
 
     private boolean isEndDayHour() {
-        int hour;
-        if (wv_hours.getItemsCount() > 0) {
-            hour = wv_hours.getCurrentItemValueInt();
-        } else {
-            return true;
-        }
-        return (isEndDay() && hour == endHour);
+        return (isEndDay() && wv_hours.getCurrentItemValueInt() == endHour);
     }
 
     private boolean isEndDayHourMinute() {
-        int minute;
-        if (wv_minutes.getItemsCount() > 0) {
-            minute = wv_minutes.getCurrentItemValueInt();
-        } else {
-            return true;
-        }
-        return (isEndDayHour() && minute == endMinute);
+        return (isEndDayHour() && wv_minutes.getCurrentItemValueInt() == endMinute);
     }
 
     private void resetHour(boolean isStartDay, int h) {
@@ -607,17 +564,12 @@ public class WheelTime {
         int realEndHour = isEndDay ? endHour : 23;
         final NumericWheelAdapter adapter;
         if (isStartDay) {
-            //没有设置起始和结束小时, 说明是默认的 System.currentTimeMillions
+            //没有设置起始和结束小时, 说明是默认的 mPickerOptions.date
             final boolean isNoRangeHour = (startHour == 0 && endHour == 0);
             final int realStartHour = isNoRangeHour ? 0 : startHour;
             if (realStartHour > realEndHour || realEndHour == 0 || isNoRangeHour) {
                 realEndHour = 23;
             }
-//            Log.e("123", "isStartDay=" + isStartDay() + " ; isEndDay=" + isEndDay +
-//                    " ; realStartHour=" + realStartHour + " ; realEndHour=" + realEndHour +
-//                    " ; startHour=" + startHour + " ; endHour=" + endHour +
-//                    " ; startMinute=" + startMinute + " ; endMinute=" + endMinute +
-//                    " ; startSecond=" + startSecond + " ; endSecond=" + endSecond);
             adapter = new NumericWheelAdapter(realStartHour, realEndHour);
             wv_hours.setCurrentItem(isNoRangeHour ? h : Math.min(wv_hours.getCurrentItem(), realStartHour));
         } else if (isEndDay) {
@@ -721,7 +673,6 @@ public class WheelTime {
 
     private void setReHourMinuteSecond() {
         final boolean isStartDay = isStartDay();
-        //Log.i("123", "setReHourMinuteSecond: isStartDay=" + isStartDay + " ; isEndDay=" + isEndDay);
         resetHour(isStartDay, 0);
         resetMinute(isStartDay, 0);
         resetSecond(isStartDay, 0);

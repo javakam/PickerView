@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
-import ando.widget.pickerview.builder.OptionsPickerBuilder;
-import ando.widget.pickerview.listener.OnOptionsSelectListener;
-import ando.widget.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -19,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ando.app.picker.bean.JsonBean;
+import ando.widget.pickerview.builder.OptionsPickerBuilder;
+import ando.widget.pickerview.listener.OnOptionsSelectListener;
+import ando.widget.pickerview.view.OptionsPickerView;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -46,12 +47,12 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_LOAD_DATA:
                     if (thread == null) {//如果已创建就不再重新创建子线程了
-
                         Toast.makeText(JsonDataActivity.this, "Begin Parse Data", Toast.LENGTH_SHORT).show();
                         thread = new Thread(new Runnable() {
                             @Override
@@ -63,15 +64,14 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                         thread.start();
                     }
                     break;
-
                 case MSG_LOAD_SUCCESS:
                     Toast.makeText(JsonDataActivity.this, "Parse Succeed", Toast.LENGTH_SHORT).show();
                     isLoaded = true;
                     break;
-
                 case MSG_LOAD_FAILED:
                     Toast.makeText(JsonDataActivity.this, "Parse Failed", Toast.LENGTH_SHORT).show();
                     break;
+                default:
             }
         }
     };
@@ -94,12 +94,11 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(JsonDataActivity.this, "Please waiting until the data is parsed", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            default:
         }
     }
 
-
     private void showPickerView() {// 弹出选择器
-
         OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -134,17 +133,14 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initJsonData() {//解析数据
-
-        /**
+        /*
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
          * 关键逻辑在于循环体
          *
-         * */
-        String JsonData = new GetJsonDataUtil().getJson(this, "province.json");//获取assets目录下的json文件数据
-
-        ArrayList<JsonBean> jsonBean = parseData(JsonData);//用Gson 转成实体
-
-        /**
+         */
+        String jsonData = new GetJsonDataUtil().getJson(this, "province.json");//获取assets目录下的json文件数据
+        ArrayList<JsonBean> jsonBean = parseData(jsonData);//用Gson 转成实体
+        /*
          * 添加省份数据
          *
          * 注意：如果是添加的JavaBean实体，则实体类需要实现 IPickerViewData 接口，
@@ -171,22 +167,17 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
                 province_AreaList.add(city_AreaList);//添加该省所有地区数据
             }
-
-            /**
+            /*
              * 添加城市数据
              */
             options2Items.add(cityList);
-
-            /**
+            /*
              * 添加地区数据
              */
             options3Items.add(province_AreaList);
         }
-
         mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
-
     }
-
 
     public ArrayList<JsonBean> parseData(String result) {//Gson 解析
         ArrayList<JsonBean> detail = new ArrayList<>();
@@ -211,5 +202,6 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
+        isLoaded = false;
     }
 }

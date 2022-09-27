@@ -30,3 +30,5 @@ implementation 'com.github.javakam:widget.pickerview:1.3.0@aar'
 
 `Bigkoo/Android-PickerView`原版说明文件
 👉 [README_ORIGIN.md](https://github.com/javakam/PickerView/blob/master/README_ORIGIN.md)
+
+阿里云中国省市县数据接口 👉 <https://blog.csdn.net/jimolangyaleng/article/details/85596748>

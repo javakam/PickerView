@@ -192,8 +192,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        endDate.set(2023, 0, 1);
         /*
         2022年9月27日 13:58:42
-        注: Calendar.set 时未设置的变量, 如"小时"字段, 系统默认赋予当前时间的"小时"。所以, 当需要限定到"时分秒"
-        时, Calendar.set 和 setType(new boolean[]{...}) 必须要对应上
+        注: Calendar.getInstance() 初始化时是用的当前时间 setTimeInMillis(System.currentTimeMillis()) ,
+        如果有的变量未设置初始值, 如"小时"字段, 系统默认赋予当前时间的"小时"。
+        所以, 当需要限定到"时分秒"时, Calendar.set 和 setType(new boolean[]{...}) 必须要对应上。
          */
 //        Log.i("123", "initTimePicker=" + endDate.get(Calendar.HOUR_OF_DAY));
 
@@ -261,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startDate.set(2022, 8, 28, 15, 25, 35);
         Calendar endDate = Calendar.getInstance();
 
-        //2022年9月26日 15:55:06
+        //2022年9月27日 14:12:08 挨个测试通过
         endDate.set(2025, 2, 5, 11, 22, 33);//非同一天测试通过
         //endDate.set(2022, 8, 30, 18, 28, 38);//同月不同天测试通过
         //endDate.set(2022, 8, 28, 18, 28, 38);//同一天测试通过
@@ -290,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                 /*.animGravity(Gravity.RIGHT)// default is center*/
-//                .setDate(selectedDate)
+                .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 

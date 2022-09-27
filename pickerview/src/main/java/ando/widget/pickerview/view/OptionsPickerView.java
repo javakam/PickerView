@@ -19,12 +19,10 @@ import ando.widget.pickerview.configure.PickerOptions;
  * Created by Sai on 15/11/22.
  */
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
-
     private WheelOptions<T> wheelOptions;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
-
 
     public OptionsPickerView(PickerOptions pickerOptions) {
         super(pickerOptions.context);
@@ -113,14 +111,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     /**
      * 设置默认选中项
-     *
-     * @param option1
      */
     public void setSelectOptions(int option1) {
         mPickerOptions.option1 = option1;
         reSetCurrentItems();
     }
-
 
     public void setSelectOptions(int option1, int option2) {
         mPickerOptions.option1 = option1;
@@ -149,20 +144,13 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.setPicker(options1Items, options2Items, null);
     }
 
-    public void setPicker(List<T> options1Items,
-                          List<List<T>> options2Items,
-                          List<List<List<T>>> options3Items) {
-
+    public void setPicker(List<T> options1Items, List<List<T>> options2Items, List<List<List<T>>> options3Items) {
         wheelOptions.setPicker(options1Items, options2Items, options3Items);
         reSetCurrentItems();
     }
 
-
     //不联动情况下调用
-    public void setNPicker(List<T> options1Items,
-                           List<T> options2Items,
-                           List<T> options3Items) {
-
+    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items) {
         wheelOptions.setLinkage(false);
         wheelOptions.setNPicker(options1Items, options2Items, options3Items);
         reSetCurrentItems();
@@ -188,7 +176,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             mPickerOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], clickView);
         }
     }
-
 
     @Override
     public boolean isDialog() {
