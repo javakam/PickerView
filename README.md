@@ -2,6 +2,8 @@
 
 > 🌴自己动手丰衣足食
 
+🚀 2023年5月17日 11:40:00 更新了`app.assets`下的`province.json`文件👉<https://github.com/javakam/GetDistricts>
+
 1. 修改自: <https://github.com/Bigkoo/Android-PickerView>
 
 2. 引入
