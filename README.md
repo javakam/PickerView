@@ -2,7 +2,11 @@
 
 > 🌴自己动手丰衣足食
 
-> 🚀 2023年5月17日 11:40:00 更新了`app.assets`下的`province.json`文件👉<https://github.com/javakam/GetDistricts>
+> 2023年5月17日 11:40:00 更新了`app.assets`下的`province.json`文件
+
+> 【注】在使用`地区选择器`时, 如果后台给了地址接口, 建议参照`app.assets`下的`province.json`统一好格式。如果后台没有接口, 可使用
+> Idea打开项目<https://github.com/javakam/GetDistricts>, 执行`GetDistricts.main`方法即可下载最新的`province.json`
+> 不过需要先申请高德Key(申请地址`https://lbs.amap.com/api/webservice/guide/api/district/`)
 
 #### 1. 修改自: <https://github.com/Bigkoo/Android-PickerView>
 
