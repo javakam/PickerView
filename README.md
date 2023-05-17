@@ -38,9 +38,9 @@ implementation 'com.github.javakam:widget.pickerview:1.3.0@aar'
 
 #### 4. 获取全国行政区域信息(高德) 👉 <https://lbs.amap.com/api/webservice/guide/api/district/>
 
-#### 5. 原项目使用说明
+#### 5. 使用说明
 
-除了`3`修改内容外, 其它完全一致。
+除了`3`修改内容外, 其它与原版完全一致。
 
 `Bigkoo/Android-PickerView`原版说明文件
 👉 [README_ORIGIN.md](https://github.com/javakam/PickerView/blob/master/README_ORIGIN.md)
