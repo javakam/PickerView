@@ -34,6 +34,7 @@ import ando.widget.pickerview.listener.OnTimeSelectChangeListener;
 import ando.widget.pickerview.listener.OnTimeSelectListener;
 import ando.widget.pickerview.view.OptionsPickerView;
 import ando.widget.pickerview.view.TimePickerView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Window dialogWindow = mDialog.getWindow();
             if (dialogWindow != null) {
-                dialogWindow.setWindowAnimations(R.style.picker_view_slide_anim);//修改动画样式
+                dialogWindow.setWindowAnimations(ando.widget.pickerview.R.style.picker_view_slide_anim);//修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
                 dialogWindow.setDimAmount(0.3f);
             }

@@ -4,7 +4,7 @@ apply from: "config.gradle"
 
 buildscript {
     repositories {
-        gradlePluginPortal()
+        //gradlePluginPortal()
         google()
 //        mavenLocal()
         mavenCentral()
@@ -20,13 +20,13 @@ buildscript {
     dependencies {
         // gradle-wrapper.properties
         // https://developer.android.com/studio/releases/gradle-plugin#updating-gradle
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
 allprojects {
     repositories {
-        gradlePluginPortal()
+        //gradlePluginPortal()
         google()
 //        mavenLocal()
         mavenCentral()
