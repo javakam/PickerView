@@ -2,6 +2,7 @@
 
 > 🌴自己动手丰衣足食
 
+> 2023年8月22日 17:06:47 更新 dependencies
 > 2023年5月17日 11:40:00 更新了`app.assets`下的`province.json`文件
 
 > 【注】在使用`地区选择器`时, 如果后台给了地址接口, 建议参照`app.assets`下的`province.json`统一好格式。如果后台没有接口, 可使用
@@ -20,8 +21,8 @@ repositories {
 ```
 
 ```groovy
-implementation 'com.github.javakam:widget.wheelview:1.3.0@aar'
-implementation 'com.github.javakam:widget.pickerview:1.3.0@aar'
+implementation 'com.github.javakam:widget.wheelview:1.5.0@aar'
+implementation 'com.github.javakam:widget.pickerview:1.5.0@aar'
 ```
 
 #### 3. 修改内容
