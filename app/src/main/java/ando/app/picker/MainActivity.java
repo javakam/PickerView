@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> computer = new ArrayList<>();
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.exit(0);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -62,12 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //等数据加载完毕再初始化并显示Picker,以免还未加载完数据就显示,造成APP崩溃。
         getOptionData();
 
-        initTimePicker();
-        initCustomTimePicker();
-        initLunarPicker();
-        initOptionPicker();
-        initCustomOptionPicker();
-        initNoLinkOptionsPicker();
+//        initTimePicker();//时间选择器
+        initCustomTimePicker();//时间选择器自定义布局
+//        initLunarPicker();//公农历切换
+        initOptionPicker();//条件选择器
+        initCustomOptionPicker();//条件选择器自定义布局
+        initNoLinkOptionsPicker();//条件选择器(不联动)
 
         btn_Time = (Button) findViewById(R.id.btn_Time);
         btn_Options = (Button) findViewById(R.id.btn_Options);
@@ -118,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 农历时间已扩展至 ： 1900 - 2100年
      */
     private void initLunarPicker() {
-        Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
         startDate.set(2014, 1, 23);
         Calendar endDate = Calendar.getInstance();
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
         })
-                .setDate(selectedDate)
+                .setDate(Calendar.getInstance())//系统当前时间
                 .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_lunar, new CustomListener() {
 
@@ -214,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 //.setRangDate(startDate, endDate)
-                .setType(new boolean[]{true, true, true, true, true, false})
+                .setType(new boolean[]{true, true, true, true, true, false}) //分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .addOnCancelClickListener(new View.OnClickListener() {
                     @Override
@@ -258,17 +263,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
          * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
          */
-        Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
+        //2022-09-28 15:25:35.122
+        //2023-08-23 15:25:35.122
         startDate.set(2022, 8, 28, 15, 25, 35);
         Calendar endDate = Calendar.getInstance();
 
         //2022年9月27日 14:12:08 挨个测试通过
-        endDate.set(2025, 2, 5, 11, 22, 33);//非同一天测试通过
+        endDate.set(2035, 2, 5, 11, 22, 33);//非同一天测试通过
         //endDate.set(2022, 8, 30, 18, 28, 38);//同月不同天测试通过
         //endDate.set(2022, 8, 28, 18, 28, 38);//同一天测试通过
         //endDate.set(2022, 8, 28, 15, 28, 38);//同一天同一小时测试通过
         //endDate.set(2022, 8, 28, 15, 25, 38);//同一天同一小时同一分钟测试通过
+
+        //Log.d("123", "startDate= " + startDate.getTimeInMillis() + " ; " + endDate.getTimeInMillis());
 
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
@@ -292,8 +300,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                 /*.animGravity(Gravity.RIGHT)// default is center*/
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
+
+                //注:当同时设置 setDate 和 setRangDate 时, 尽量保证 setDate 值在范围之中
+                .setDate(Calendar.getInstance())//系统当前时间
+                .setRangDate(startDate, endDate)//设置时间范围
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 
                     @Override
@@ -316,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .setContentTextSize(16)
-                .setType(new boolean[]{true, true, true, true, true, true})
+                .setType(new boolean[]{true, true, true, true, true, true})//分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
                 .setLabel("年", "月", "日", "时", "分", "秒")
                 .setLineSpacingMultiplier(2.2f)
                 .setTextXOffset(20, 0, 0, 0, 0, -20)

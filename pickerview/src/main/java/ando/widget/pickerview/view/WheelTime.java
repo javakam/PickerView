@@ -1,5 +1,6 @@
 package ando.widget.pickerview.view;
 
+import android.util.Log;
 import android.view.View;
 
 import java.text.DateFormat;
@@ -29,6 +30,7 @@ public class WheelTime {
     private int gravity;
 
     private boolean[] type;
+    private Calendar calendarDate;
     private static final int DEFAULT_START_YEAR = 1900;
     private static final int DEFAULT_START_MONTH = 1;
     private static final int DEFAULT_START_DAY = 1;
@@ -52,7 +54,7 @@ public class WheelTime {
     private int currentYear;
 
     private int textSize;
-
+    private boolean isSetDateInRange = false;//setDate 是否在 setRangDate 范围之中
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
 
@@ -560,12 +562,14 @@ public class WheelTime {
     }
 
     private void resetHour(boolean isStartDay, int h) {
+        Log.e("123", "hhh=" + h + " ; " + isSetDateInRange);
         final boolean isEndDay = isEndDay();
         int realEndHour = isEndDay ? endHour : 23;
         final NumericWheelAdapter adapter;
         if (isStartDay) {
             //没有设置起始和结束小时, 说明是默认的 mPickerOptions.date
-            final boolean isNoRangeHour = (startHour == 0 && endHour == 0);
+            //todo 2023年8月23日 17:24:02 待修复 中间日期时候, 时分秒显示异常!
+            final boolean isNoRangeHour = (startHour == 0 && endHour == 0);// || isSetDateInRange
             final int realStartHour = isNoRangeHour ? 0 : startHour;
             if (realStartHour > realEndHour || realEndHour == 0 || isNoRangeHour) {
                 realEndHour = 23;
@@ -846,6 +850,10 @@ public class WheelTime {
         return view;
     }
 
+    public void setDate(Calendar calendar) {
+        this.calendarDate = calendar;
+    }
+
     public int getStartYear() {
         return startYear;
     }
@@ -863,6 +871,12 @@ public class WheelTime {
     }
 
     public void setRangDate(Calendar startDate, Calendar endDate) {
+        if (this.calendarDate != null && startDate != null && endDate != null && calendarDate.getTimeInMillis() >= startDate.getTimeInMillis()
+                && calendarDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
+            this.isSetDateInRange = true;
+        } else {
+            this.isSetDateInRange = false;
+        }
         if (startDate == null && endDate != null) {
             int year = endDate.get(Calendar.YEAR);
             int month = endDate.get(Calendar.MONTH) + 1;

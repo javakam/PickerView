@@ -2,6 +2,7 @@ package ando.widget.pickerview.view;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -172,13 +173,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      */
     private void setRangDate() {
         wheelTime.setRangDate(mPickerOptions.startDate, mPickerOptions.endDate);
-        initDefaultSelectedDate();
-    }
-
-    private void initDefaultSelectedDate() {
         //如果手动设置了时间范围
         if (mPickerOptions.startDate != null && mPickerOptions.endDate != null) {
-            //若默认时间未设置，或者设置的默认时间越界了，则设置默认选中时间为开始时间。
+            //若默认时间(setDate)未设置或者越界了，则把选中时间做为开始时间。
             if (mPickerOptions.date == null || mPickerOptions.date.getTimeInMillis() < mPickerOptions.startDate.getTimeInMillis()
                     || mPickerOptions.date.getTimeInMillis() > mPickerOptions.endDate.getTimeInMillis()) {
                 mPickerOptions.date = mPickerOptions.startDate;
@@ -196,9 +193,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      */
     private void setTime() {
         int year, month, day, hours, minute, seconds;
-        Calendar calendar = Calendar.getInstance();
 
         if (mPickerOptions.date == null) {
+            Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
@@ -207,6 +204,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = calendar.get(Calendar.MINUTE);
             seconds = calendar.get(Calendar.SECOND);
         } else {
+            Log.e("123", "mPickerOptions.date:" + mPickerOptions.date.getTimeInMillis());
             year = mPickerOptions.date.get(Calendar.YEAR);
             month = mPickerOptions.date.get(Calendar.MONTH);
             day = mPickerOptions.date.get(Calendar.DAY_OF_MONTH);

@@ -14,6 +14,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btn_Time"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryLight"
+                android:text="@string/picker_time"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_CustomTime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryLight"
+                android:text="@string/picker_custom_time"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_lunar"
@@ -23,27 +43,12 @@
                 android:text="@string/picker_custom_lunar" />
 
             <Button
-                android:id="@+id/btn_Time"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:text="@string/picker_time" />
-
-            <Button
                 android:id="@+id/btn_Options"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/tvTime"
                 android:layout_margin="10dp"
                 android:text="@string/picker_province" />
-
-            <Button
-                android:id="@+id/btn_CustomTime"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvTime"
-                android:layout_margin="10dp"
-                android:text="@string/picker_custom_time" />
 
             <Button
                 android:id="@+id/btn_CustomOptions"
@@ -60,6 +65,11 @@
                 android:layout_below="@+id/tvTime"
                 android:layout_margin="10dp"
                 android:text="@string/picker_non_linkage" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryLight" />
 
             <Button
                 android:id="@+id/btn_GotoJsonData"
