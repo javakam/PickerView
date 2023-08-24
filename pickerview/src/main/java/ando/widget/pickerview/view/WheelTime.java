@@ -359,7 +359,7 @@ public class WheelTime {
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
                 currentYear = year_num;
-                int currentMonthItem = wv_month.getCurrentItem();//记录上一次的item位置
+                int currentMonthItem = wv_month.getCurrentItem();
                 // 判断大小月及是否闰年,用来确定"日"的数据
                 if (startYear == endYear) {
                     //重新设置月份
@@ -367,11 +367,10 @@ public class WheelTime {
 
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
-                        wv_month.setCurrentItem(currentMonthItem);
                     }
+                    wv_month.setCurrentItem(Math.min(1, currentMonthItem));
 
                     int monthNum = currentMonthItem + startMonth;
-
                     if (startMonth == endMonth) {
                         //重新设置日
                         setReDay(year_num, monthNum, startDay, endDay, list_big, list_little);
@@ -386,11 +385,10 @@ public class WheelTime {
                 } else if (year_num == startYear) {//等于开始的年
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
-
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
-                        wv_month.setCurrentItem(currentMonthItem);
                     }
+                    wv_month.setCurrentItem(Math.min(1, currentMonthItem));
 
                     int month = currentMonthItem + startMonth;
                     if (month == startMonth) {
@@ -405,18 +403,16 @@ public class WheelTime {
                     wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
-                        wv_month.setCurrentItem(currentMonthItem);
                     }
-                    int monthNum = currentMonthItem + 1;
+                    wv_month.setCurrentItem(Math.min(1, currentMonthItem));
 
+                    int monthNum = currentMonthItem + 1;
                     if (monthNum == endMonth) {
                         //重新设置日
                         setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
                     } else {
-                        //重新设置日
                         setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
-
                 } else {
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(1, 12));
@@ -477,7 +473,7 @@ public class WheelTime {
             @Override
             public void onItemSelected(int index) {
                 final boolean isStartDay = (isStartMonth() && (startDay > 0 && index == 0));//0->startDay
-                Log.e("123", "onItemSelected111: " + isStartDay + ";" + isStartDayHour() + ";" + isStartDayHourMinute());
+                Log.e("12345", "onItemSelected111: " + isStartDay + ";" + isStartDayHour() + ";" + isStartDayHourMinute());
                 resetHour(true, isStartDay, h);
                 resetMinute(true, isStartDayHour(), m);
                 resetSecond(true, isStartDayHourMinute(), s);
@@ -488,7 +484,7 @@ public class WheelTime {
             @Override
             public void onItemSelected(int index) {
                 final boolean isStartDayHour = (isStartDay() && (startHour > 0 && index == 0));//0->startHour
-                Log.e("123", "onItemSelected222: " + isStartDay() + ";" + isStartDayHour + ";" + isStartDayHour() + ";" + isStartDayHourMinute());
+                Log.e("12345", "onItemSelected222: " + isStartDay() + ";" + isStartDayHour + ";" + isStartDayHour() + ";" + isStartDayHourMinute());
 
                 resetMinute(true, isStartDayHour, m);
                 resetSecond(true, isStartDayHourMinute(), s);
@@ -526,8 +522,7 @@ public class WheelTime {
     private boolean isStartDay() {
         boolean isStartDay = false;
         if (wv_day.getItemsCount() > 0) {
-            //或者 wv_day.getCurrentItemValueInt();
-            isStartDay = (isStartMonth() && wv_day.getCurrentItem() == 0);
+            isStartDay = (isStartMonth() && wv_day.getCurrentItem() == 0);//或者 wv_day.getCurrentItemValueInt();
         }
         return isStartDay;
     }
@@ -561,8 +556,8 @@ public class WheelTime {
     }
 
     private void resetHour(boolean isUserScroll, boolean isStartDay, int h) {
-        Log.w("123", "resetHour h=" + h + ";isSetDateInRange=" + isSetDateInRange +
-                ";isStartDay=" + isStartDay() + ";" + isStartDay + ";isEndDay=" + isEndDay());
+//        Log.e("12345", "resetHour h=" + h + ";isSetDateInRange=" + isSetDateInRange +
+//                ";isStartDay=" + isStartDay() + ";" + isStartDay + ";isEndDay=" + isEndDay() + ";" + startHour);
         final boolean isEndDay = isEndDay();
         int realEndHour = isEndDay ? endHour : 23;
         int realStartHour = isStartDay ? startHour : 0;
@@ -570,16 +565,16 @@ public class WheelTime {
 
         if (isStartDay && isEndDay) {//同一天
             adapter = new NumericWheelAdapter(realStartHour, realEndHour);
-            wv_hours.setCurrentItem(isUserScroll ? 0 : (isSetDateInRange ? h : realStartHour));
+            wv_hours.setCurrentItem(isUserScroll ? wv_hours.getCurrentItem() : (isSetDateInRange ? Math.abs(h - realStartHour) : Math.min(0, realStartHour)));
         } else if (isStartDay) {
             adapter = new NumericWheelAdapter(realStartHour, 23);
-            wv_hours.setCurrentItem(isUserScroll ? 0 : Math.max(h, realStartHour));
+            wv_hours.setCurrentItem(isUserScroll ? wv_hours.getCurrentItem() : (isSetDateInRange ? Math.abs(h - realStartHour) : 0));
         } else if (isEndDay) {
             adapter = new NumericWheelAdapter(0, realEndHour);
-            wv_hours.setCurrentItem(isUserScroll ? 0 : Math.min(h, realEndHour));
+            wv_hours.setCurrentItem(isUserScroll ? wv_hours.getCurrentItem() : Math.min(h, realEndHour));
         } else {
             adapter = new NumericWheelAdapter(0, 23);
-            wv_hours.setCurrentItem(isUserScroll ? 0 : h);
+            wv_hours.setCurrentItem(isUserScroll ? wv_hours.getCurrentItem() : h);
         }
         wv_hours.setAdapter(adapter);
     }
@@ -592,16 +587,16 @@ public class WheelTime {
         final NumericWheelAdapter adapter;
         if (isStartDayHour && isEndDayHour) {//同一天同一小时
             adapter = new NumericWheelAdapter(realStartHourMinute, realEndHourMinute);
-            wv_minutes.setCurrentItem(isUserScroll ? 0 : (isSetDateInRange ? m : realStartHourMinute));
+            wv_minutes.setCurrentItem(isUserScroll ? wv_minutes.getCurrentItem() : (isSetDateInRange ? Math.abs(m - realStartHourMinute) : Math.min(0, realStartHourMinute)));
         } else if (isStartDayHour) {
             adapter = new NumericWheelAdapter(realStartHourMinute, 59);
-            wv_minutes.setCurrentItem(isUserScroll ? 0 : Math.max(m, realStartHourMinute));
+            wv_minutes.setCurrentItem(isUserScroll ? wv_minutes.getCurrentItem() : (isSetDateInRange ? Math.abs(m - realStartHourMinute) : 0));
         } else if (isEndDayHour) {
             adapter = new NumericWheelAdapter(0, realEndHourMinute);
-            wv_minutes.setCurrentItem(isUserScroll ? 0 : Math.min(m, realEndHourMinute));
+            wv_minutes.setCurrentItem(isUserScroll ? wv_minutes.getCurrentItem() : Math.min(m, realEndHourMinute));
         } else {
             adapter = new NumericWheelAdapter(0, 59);
-            wv_minutes.setCurrentItem(isUserScroll ? 0 : m);
+            wv_minutes.setCurrentItem(isUserScroll ? wv_minutes.getCurrentItem() : m);
         }
         wv_minutes.setAdapter(adapter);
     }
@@ -614,16 +609,16 @@ public class WheelTime {
         final NumericWheelAdapter adapter;
         if (isStartDayHourMinute && isEndDayHourMinute) {//同一天同一小时同一分钟
             adapter = new NumericWheelAdapter(realStartHourMinuteSecond, realEndHourMinuteSecond);
-            wv_seconds.setCurrentItem(isUserScroll ? 0 : (isSetDateInRange ? s : realStartHourMinuteSecond));
+            wv_seconds.setCurrentItem(isUserScroll ? wv_seconds.getCurrentItem() : (isSetDateInRange ? Math.abs(s - realStartHourMinuteSecond) : Math.min(0, realStartHourMinuteSecond)));
         } else if (isStartDayHourMinute) {
             adapter = new NumericWheelAdapter(realStartHourMinuteSecond, 59);
-            wv_seconds.setCurrentItem(isUserScroll ? 0 : Math.max(s, realStartHourMinuteSecond));
+            wv_seconds.setCurrentItem(isUserScroll ? wv_seconds.getCurrentItem() : (isSetDateInRange ? Math.abs(s - realStartHourMinuteSecond) : 0));
         } else if (isEndDayHourMinute) {
             adapter = new NumericWheelAdapter(0, realEndHourMinuteSecond);
-            wv_seconds.setCurrentItem(isUserScroll ? 0 : Math.min(s, realEndHourMinuteSecond));
+            wv_seconds.setCurrentItem(isUserScroll ? wv_seconds.getCurrentItem() : Math.min(s, realEndHourMinuteSecond));
         } else {
             adapter = new NumericWheelAdapter(0, 59);
-            wv_seconds.setCurrentItem(isUserScroll ? 0 : s);
+            wv_seconds.setCurrentItem(isUserScroll ? wv_seconds.getCurrentItem() : s);
         }
         wv_seconds.setAdapter(adapter);
     }
@@ -672,14 +667,11 @@ public class WheelTime {
             currentItem = wv_day.getAdapter().getItemsCount() - 1;
             wv_day.setCurrentItem(currentItem);
         }
-        setReHourMinuteSecond();
-    }
 
-    private void setReHourMinuteSecond() {
         final boolean isStartDay = isStartDay();
-        resetHour(true, isStartDay, 0);
-        resetMinute(true, isStartDay, 0);
-        resetSecond(true, isStartDay, 0);
+        resetHour(true, isStartDay, wv_hours.getCurrentItem());
+        resetMinute(true, isStartDay, wv_minutes.getCurrentItem());
+        resetSecond(true, isStartDay, wv_seconds.getCurrentItem());
     }
 
     private void setContentTextSize() {

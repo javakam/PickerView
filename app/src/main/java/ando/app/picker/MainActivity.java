@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //等数据加载完毕再初始化并显示Picker,以免还未加载完数据就显示,造成APP崩溃。
         getOptionData();
 
-//        initTimePicker();//时间选择器
+        initTimePicker();//时间选择器
         initCustomTimePicker();//时间选择器自定义布局
-//        initLunarPicker();//公农历切换
+        initLunarPicker();//公农历切换
         initOptionPicker();//条件选择器
         initCustomOptionPicker();//条件选择器自定义布局
         initNoLinkOptionsPicker();//条件选择器(不联动)
@@ -204,6 +204,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
 //        Log.i("123", "initTimePicker=" + endDate.get(Calendar.HOUR_OF_DAY));
 
+        //默认时间范围是 1900 - 2100年, 可以通过 setRangDate 重新设置范围
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2023, 7, 23, 15, 25, 35);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2035, 2, 5, 11, 22, 33);
+
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
@@ -231,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setLineSpacingMultiplier(2.5f)
                 .setPadding(25, 0, 25, 0)
                 .setContentTextSize(17)
+                .setRangDate(startDate, endDate)//替换掉默认的时间范围 1900 - 2100年
                 .isAlphaGradient(true)
                 .build();
 
@@ -264,13 +271,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
          */
         Calendar startDate = Calendar.getInstance();
-        //2022-09-28 15:25:35.122
-        //2023-08-23 15:25:35.122
-        startDate.set(2022, 8, 28, 15, 25, 35);
-        Calendar endDate = Calendar.getInstance();
+        startDate.set(2022, 8, 28, 15, 25, 35);//2022-09-28 15:25:35.122
 
-        //2022年9月27日 14:12:08 挨个测试通过
+        Calendar endDate = Calendar.getInstance();
         endDate.set(2035, 2, 5, 11, 22, 33);//非同一天测试通过
+        //2022年9月27日 14:12:08 挨个测试通过
         //endDate.set(2022, 8, 30, 18, 28, 38);//同月不同天测试通过
         //endDate.set(2022, 8, 28, 18, 28, 38);//同一天测试通过
         //endDate.set(2022, 8, 28, 15, 28, 38);//同一天同一小时测试通过
