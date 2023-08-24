@@ -106,6 +106,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         wheelTime.setLunarMode(mPickerOptions.isLunarCalendar);
+        wheelTime.setDate(mPickerOptions.date);
 
         if (mPickerOptions.startYear != 0 && mPickerOptions.endYear != 0
                 && mPickerOptions.startYear <= mPickerOptions.endYear) {
@@ -204,7 +205,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = calendar.get(Calendar.MINUTE);
             seconds = calendar.get(Calendar.SECOND);
         } else {
-            Log.e("123", "mPickerOptions.date:" + mPickerOptions.date.getTimeInMillis());
             year = mPickerOptions.date.get(Calendar.YEAR);
             month = mPickerOptions.date.get(Calendar.MONTH);
             day = mPickerOptions.date.get(Calendar.DAY_OF_MONTH);

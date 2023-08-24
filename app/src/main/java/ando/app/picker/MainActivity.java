@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 //.setRangDate(startDate, endDate)
-                .setType(new boolean[]{true, true, true, true, true, false}) //分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
+                .setType(new boolean[]{true, true, true, true, true, true}) //分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .addOnCancelClickListener(new View.OnClickListener() {
                     @Override
