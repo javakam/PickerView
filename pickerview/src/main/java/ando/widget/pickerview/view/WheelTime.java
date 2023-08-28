@@ -368,7 +368,7 @@ public class WheelTime {
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                     }
-                    wv_month.setCurrentItem(Math.min(1, currentMonthItem));
+                    wv_month.setCurrentItem(Math.max(1, currentMonthItem));
 
                     int monthNum = currentMonthItem + startMonth;
                     if (startMonth == endMonth) {
@@ -388,7 +388,7 @@ public class WheelTime {
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                     }
-                    wv_month.setCurrentItem(Math.min(1, currentMonthItem));
+                    wv_month.setCurrentItem(Math.max(1, currentMonthItem));
 
                     int month = currentMonthItem + startMonth;
                     if (month == startMonth) {
@@ -404,7 +404,7 @@ public class WheelTime {
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                     }
-                    wv_month.setCurrentItem(Math.min(1, currentMonthItem));
+                    wv_month.setCurrentItem(Math.max(1, currentMonthItem));
 
                     int monthNum = currentMonthItem + 1;
                     if (monthNum == endMonth) {
