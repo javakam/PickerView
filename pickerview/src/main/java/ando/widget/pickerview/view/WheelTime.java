@@ -364,7 +364,6 @@ public class WheelTime {
                 if (startYear == endYear) {
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
-
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                     }
@@ -375,15 +374,13 @@ public class WheelTime {
                         //重新设置日
                         setReDay(year_num, monthNum, startDay, endDay, list_big, list_little);
                     } else if (monthNum == startMonth) {
-                        //重新设置日
                         setReDay(year_num, monthNum, startDay, 31, list_big, list_little);
                     } else if (monthNum == endMonth) {
                         setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
-                    } else {//重新设置日
+                    } else {
                         setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
                 } else if (year_num == startYear) {//等于开始的年
-                    //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
@@ -392,14 +389,11 @@ public class WheelTime {
 
                     int month = currentMonthItem + startMonth;
                     if (month == startMonth) {
-                        //重新设置日
                         setReDay(year_num, month, startDay, 31, list_big, list_little);
                     } else {
-                        //重新设置日
                         setReDay(year_num, month, 1, 31, list_big, list_little);
                     }
                 } else if (year_num == endYear) {
-                    //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
@@ -408,15 +402,12 @@ public class WheelTime {
 
                     int monthNum = currentMonthItem + 1;
                     if (monthNum == endMonth) {
-                        //重新设置日
                         setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
                     } else {
                         setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
                 } else {
-                    //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(1, 12));
-                    //重新设置日
                     setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
                 }
 
