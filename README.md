@@ -28,7 +28,7 @@ implementation 'com.github.javakam:widget.pickerview:1.5.0@aar'
 
 #### 3. 修改内容
 
-- ]2023年8月28日 09:58:38 重写时间切换和范围设定的逻辑;优化演示Demo, 增加了一些注释
+- 2023年8月28日 09:58:38 优化时间切换和范围设定的逻辑；优化演示Demo, 增加了一些注释
 - 支持 androidx
 - setPadding(l,t,r,b) 新增内容视图调整上下左右边距
 - setRangDate(startDate, endDate) 现支持"年,月,日,时,分,秒"的限定, 原版仅支持"年月日"
