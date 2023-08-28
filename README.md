@@ -22,8 +22,8 @@ repositories {
 ```
 
 ```groovy
-implementation 'com.github.javakam:widget.wheelview:1.5.0@aar'
-implementation 'com.github.javakam:widget.pickerview:1.5.0@aar'
+implementation 'com.github.javakam:widget.wheelview:1.6.0@aar'
+implementation 'com.github.javakam:widget.pickerview:1.6.0@aar'
 ```
 
 #### 3. 修改内容
