@@ -5,7 +5,7 @@
     <string name="picker_time">TimePicker</string>
     <string name="picker_province">OptionsPicker</string>
 
-    <string name="picker_custom_time">CustomLayoutTimePicker</string>
+    <string name="picker_custom_time">CustomLayoutTimePicker(No 3D effect)</string>
     <string name="picker_custom_province">CustomLayoutOptionsPicker</string>
     <string name="picker_custom_parent">CustomParentView</string>
 

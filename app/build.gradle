@@ -5,10 +5,10 @@ plugins {
 def config = rootProject.ext.config
 
 android {
-    compileSdk config.compileSdkVersion
+    compileSdk config.compileSdk
     defaultConfig {
-        minSdk config.minSdkVersion
-        targetSdk config.targetSdkVersion
+        minSdk config.minSdk
+        targetSdk config.targetSdk
         versionCode config.versionCode
         versionName config.versionName
 

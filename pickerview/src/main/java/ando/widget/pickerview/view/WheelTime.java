@@ -1036,4 +1036,13 @@ public class WheelTime {
         wv_minutes.setAlphaGradient(isAlphaGradient);
         wv_seconds.setAlphaGradient(isAlphaGradient);
     }
+
+    public void setOuterTextScale(boolean isOuterTextScale) {
+        wv_day.setOuterTextScale(isOuterTextScale);
+        wv_month.setOuterTextScale(isOuterTextScale);
+        wv_year.setOuterTextScale(isOuterTextScale);
+        wv_hours.setOuterTextScale(isOuterTextScale);
+        wv_minutes.setOuterTextScale(isOuterTextScale);
+        wv_seconds.setOuterTextScale(isOuterTextScale);
+    }
 }

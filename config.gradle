@@ -2,14 +2,13 @@ ext {
 
     config = [
             applicationId    : "ando.app.picker",
-            compileSdkVersion: 33,
-            buildToolsVersion: '33.0.2',
-            minSdkVersion    : 14,
-            targetSdkVersion : 33,
-            versionCode      : 6,
-            versionName      : "1.6.0",
-            versionWheelView : "1.6.0",
-            versionPickerView: "1.6.0",
+            compileSdk       : 33,
+            minSdk           : 14,
+            targetSdk        : 33,
+            versionCode      : 7,
+            versionName      : "1.7.0",
+            versionWheelView : "1.7.0",
+            versionPickerView: "1.7.0",
 
 
             //annotation 不能用 1.6.0 ! https://stackoverflow.com/questions/75263047/duplicate-class-in-kotlin-android/75567658#75567658

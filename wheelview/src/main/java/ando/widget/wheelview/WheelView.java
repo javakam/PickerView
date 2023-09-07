@@ -117,9 +117,9 @@ public class WheelView extends View {
     private int mGravity = Gravity.CENTER;
     private int drawCenterContentStart = 0;//中间选中文字开始绘制位置
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
+    private boolean isOuterTextScale = true;//非中间文字是否压扁形成3d错觉
     private static final float SCALE_CONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private float CENTER_CONTENT_OFFSET;//偏移量
-
     private boolean isAlphaGradient = false; //透明度渐变
 
     public WheelView(Context context) {
@@ -328,6 +328,10 @@ public class WheelView extends View {
         this.itemsVisible = visibleCount + 2; //第一条和最后一条
     }
 
+    public void setOuterTextScale(boolean outerTextScale) {
+        isOuterTextScale = outerTextScale;
+    }
+
     public void setAlphaGradient(boolean alphaGradient) {
         isAlphaGradient = alphaGradient;
     }
@@ -507,29 +511,41 @@ public class WheelView extends View {
                 float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
+                //非中间字体关闭缩放时, 必须开启颜色渐变, 否则会有文字重叠的问题; 当开启缩放时, !建议!关闭颜色渐变, 显示效果更好
+                if (!isOuterTextScale) {
+                    isAlphaGradient = true;
+                }
                 if (translateY <= firstLineY && maxTextHeight + translateY >= firstLineY) {
                     // 条目经过第一条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, firstLineY - translateY);
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    if (isOuterTextScale) {
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    }
                     setOutPaintStyle(offsetCoefficient, angle);
                     canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, firstLineY - translateY, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian));
+                    if (isOuterTextScale) {
+                        canvas.scale(1.0F, (float) Math.sin(radian));
+                    }
                     canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
                     canvas.restore();
                 } else if (translateY <= secondLineY && maxTextHeight + translateY >= secondLineY) {
                     // 条目经过第二条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, secondLineY - translateY);
-                    canvas.scale(1.0F, (float) Math.sin(radian));
+                    if (isOuterTextScale) {
+                        canvas.scale(1.0F, (float) Math.sin(radian));
+                    }
                     canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, secondLineY - translateY, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    if (isOuterTextScale) {
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    }
                     setOutPaintStyle(offsetCoefficient, angle);
                     canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
@@ -545,7 +561,9 @@ public class WheelView extends View {
                     // 其他条目
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    if (isOuterTextScale) {
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    }
                     setOutPaintStyle(offsetCoefficient, angle);
                     // 控制文字水平偏移距离
                     canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
@@ -798,7 +816,7 @@ public class WheelView extends View {
     public void setTextXOffset(int textXOffset) {
         this.textXOffset = textXOffset;
         if (textXOffset != 0) {
-            paintCenterText.setTextScaleX(1.0f);
+            paintCenterText.setTextScaleX(1.0F);
         }
     }
 

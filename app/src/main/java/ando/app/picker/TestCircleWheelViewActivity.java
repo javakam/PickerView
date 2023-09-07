@@ -31,6 +31,9 @@ public class TestCircleWheelViewActivity extends AppCompatActivity {
         // wheelView.setDividerWidth(6);
         wheelView.setDividerType(WheelView.DividerType.CIRCLE);
 
+        //关闭字体3D效果
+        //wheelView.setOuterTextScale(false);
+
         final List<String> mOptionsItems = new ArrayList<>();
         mOptionsItems.add("10");
         mOptionsItems.add("20");

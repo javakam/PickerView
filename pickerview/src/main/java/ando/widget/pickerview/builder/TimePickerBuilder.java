@@ -12,6 +12,7 @@ import ando.widget.pickerview.listener.OnTimeSelectChangeListener;
 import ando.widget.pickerview.listener.OnTimeSelectListener;
 import ando.widget.pickerview.view.TimePickerView;
 import ando.widget.wheelview.WheelView;
+
 import androidx.annotation.ColorInt;
 
 /**
@@ -154,6 +155,11 @@ public class TimePickerBuilder {
      */
     public TimePickerBuilder isAlphaGradient(boolean isAlphaGradient) {
         mPickerOptions.isAlphaGradient = isAlphaGradient;
+        return this;
+    }
+
+    public TimePickerBuilder setOuterTextScale(boolean outerTextScale) {
+        mPickerOptions.isOuterTextScale = outerTextScale;
         return this;
     }
 

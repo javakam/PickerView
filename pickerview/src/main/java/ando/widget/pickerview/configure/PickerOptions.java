@@ -113,4 +113,5 @@ public class PickerOptions {
     public WheelView.DividerType dividerType = WheelView.DividerType.FILL;//分隔线类型
     public int itemsVisibleCount = 9; //最大可见条目数
     public boolean isAlphaGradient = false; //透明度渐变
+    public boolean isOuterTextScale = true; //非中间文字是否压扁形成3d错觉
 }

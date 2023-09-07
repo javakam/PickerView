@@ -3,10 +3,10 @@ apply plugin: 'com.android.library'
 def config = rootProject.ext.config
 
 android {
-    compileSdk config.compileSdkVersion
+    compileSdk config.compileSdk
     defaultConfig {
-        minSdk config.minSdkVersion
-        targetSdk config.targetSdkVersion
+        minSdk config.minSdk
+        targetSdk config.targetSdk
     }
     buildTypes {
         release {

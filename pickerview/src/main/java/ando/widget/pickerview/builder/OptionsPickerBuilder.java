@@ -265,6 +265,11 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder isOuterTextScale(boolean outerTextScale) {
+        mPickerOptions.isOuterTextScale = outerTextScale;
+        return this;
+    }
+
     /**
      * 切换选项时，是否还原第一项
      *

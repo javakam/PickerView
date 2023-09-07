@@ -426,4 +426,10 @@ public class WheelOptions<T> {
         wv_option2.setAlphaGradient(isAlphaGradient);
         wv_option3.setAlphaGradient(isAlphaGradient);
     }
+
+    public void setOuterTextScale(boolean isOuterTextScale) {
+        wv_option1.setOuterTextScale(isOuterTextScale);
+        wv_option2.setOuterTextScale(isOuterTextScale);
+        wv_option3.setOuterTextScale(isOuterTextScale);
+    }
 }

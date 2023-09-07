@@ -143,6 +143,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                 mPickerOptions.x_offset_hours, mPickerOptions.x_offset_minutes, mPickerOptions.x_offset_seconds);
         wheelTime.setItemsVisible(mPickerOptions.itemsVisibleCount);
         wheelTime.setAlphaGradient(mPickerOptions.isAlphaGradient);
+        wheelTime.setOuterTextScale(mPickerOptions.isOuterTextScale);
         setOutSideCancelable(mPickerOptions.cancelable);
         wheelTime.setCyclic(mPickerOptions.cyclic);
         wheelTime.setDividerColor(mPickerOptions.dividerColor);

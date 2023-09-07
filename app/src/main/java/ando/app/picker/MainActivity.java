@@ -191,11 +191,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
 
-    private void initTimePicker() {//Dialog 模式下，在底部弹出
-//        Calendar startDate = Calendar.getInstance();
-//        startDate.set(2022, 8, 28);
-//        Calendar endDate = Calendar.getInstance();
-//        endDate.set(2023, 0, 1);
+    //Dialog 模式下，在底部弹出
+    private void initTimePicker() {
         /*
         2022年9月27日 13:58:42
         注: Calendar.getInstance() 初始化时是用的当前时间 setTimeInMillis(System.currentTimeMillis()) ,
@@ -238,7 +235,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setPadding(25, 0, 25, 0)
                 .setContentTextSize(17)
                 .setRangDate(startDate, endDate)//替换掉默认的时间范围 1900 - 2100年
-                .isAlphaGradient(true)
                 .build();
 
         Dialog mDialog = pvTime.getDialog();
@@ -261,10 +257,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //时间选择器 ，自定义布局
     private void initCustomTimePicker() {
         /*
          * 注意事项：
-         *
          * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针.
          * 具体可参考demo 里面的两个自定义layout布局。
          * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
@@ -280,10 +276,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //endDate.set(2022, 8, 28, 18, 28, 38);//同一天测试通过
         //endDate.set(2022, 8, 28, 15, 28, 38);//同一天同一小时测试通过
         //endDate.set(2022, 8, 28, 15, 25, 38);//同一天同一小时同一分钟测试通过
-
         //Log.d("123", "startDate= " + startDate.getTimeInMillis() + " ; " + endDate.getTimeInMillis());
 
-        //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -330,16 +324,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
-                .setContentTextSize(16)
+                .setContentTextSize(17)
                 .setType(new boolean[]{true, true, true, true, true, true})//分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
                 .setLabel("年", "月", "日", "时", "分", "秒")
-                .setLineSpacingMultiplier(2.2f)
+                .setLineSpacingMultiplier(2.2F)
                 .setTextXOffset(20, 0, 0, 0, 0, -20)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                //.isCyclic(true)
+                .isCyclic(false)//是否循环滚动
                 .setDividerColor(0xFF24AD9D)
                 .setPadding(15, 0, 15, 0)
-                .setMinHeight(550)
+                .setMinHeight(580)
+                .setItemVisibleCount(7)
+                .isDialog(false)//中间弹窗样式
+
+                //非中间字体关闭缩放时, 会强制开启颜色渐变, 否则会有文字重叠的问题; 当开启缩放时, !建议!关闭颜色渐变, 显示效果更好
+                .setOuterTextScale(false)//关闭字体3D效果(默认开启) -> PickerOptions.isOuterTextScale
+                //.isAlphaGradient(true)//此时内部已强制为 true
+
                 .build();
     }
 
