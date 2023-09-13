@@ -69,35 +69,34 @@
             android:layout_weight="1" />
 
         <ando.widget.wheelview.WheelView
-
             android:id="@+id/month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.1" />
+            android:layout_weight="1" />
 
         <ando.widget.wheelview.WheelView
             android:id="@+id/day"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.1" />
+            android:layout_weight="1" />
 
         <ando.widget.wheelview.WheelView
             android:id="@+id/hour"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.1" />
+            android:layout_weight="1" />
 
         <ando.widget.wheelview.WheelView
             android:id="@+id/min"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.1" />
+            android:layout_weight="1" />
 
         <ando.widget.wheelview.WheelView
             android:id="@+id/second"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.1" />
+            android:layout_weight="1" />
     </LinearLayout>
 
 

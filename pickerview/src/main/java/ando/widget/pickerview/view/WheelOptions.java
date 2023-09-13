@@ -402,6 +402,12 @@ public class WheelOptions<T> {
         wv_option3.isCenterLabel(isCenterLabel);
     }
 
+    public void setCenterLabelSpacing(float centerLabelSpacing) {
+        wv_option1.setCenterLabelSpacing(centerLabelSpacing);
+        wv_option2.setCenterLabelSpacing(centerLabelSpacing);
+        wv_option3.setCenterLabelSpacing(centerLabelSpacing);
+    }
+
     public void setOptionsSelectChangeListener(OnOptionsSelectChangeListener optionsSelectChangeListener) {
         this.optionsSelectChangeListener = optionsSelectChangeListener;
     }

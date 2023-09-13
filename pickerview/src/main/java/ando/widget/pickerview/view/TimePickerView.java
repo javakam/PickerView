@@ -2,7 +2,6 @@ package ando.widget.pickerview.view;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -152,6 +151,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.setTextColorOut(mPickerOptions.textColorOut);
         wheelTime.setTextColorCenter(mPickerOptions.textColorCenter);
         wheelTime.isCenterLabel(mPickerOptions.isCenterLabel);
+        wheelTime.setCenterLabelSpacing(mPickerOptions.centerLabelSpacing);
     }
 
     /**

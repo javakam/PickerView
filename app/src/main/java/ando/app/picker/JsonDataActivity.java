@@ -20,6 +20,7 @@ import ando.app.picker.bean.JsonBean;
 import ando.widget.pickerview.builder.OptionsPickerBuilder;
 import ando.widget.pickerview.listener.OnOptionsSelectListener;
 import ando.widget.pickerview.view.OptionsPickerView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -123,7 +124,8 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 .setTitleText("城市选择")
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-                .setContentTextSize(20)
+                .setContentTextSize(17)
+                .setOuterTextScale(true)//非中间区域文字3D效果
                 .build();
 
         /*pvOptions.setPicker(options1Items);//一级选择器

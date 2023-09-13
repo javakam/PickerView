@@ -109,9 +109,10 @@ public class PickerOptions {
 
     public boolean cancelable = true;//是否能取消
     public boolean isCenterLabel = false;//是否只显示中间的label,默认每个item都显示
+    public float centerLabelSpacing = 0F;//isCenterLabel=true时生效, 控制中间文本和label的间距
     public Typeface font = Typeface.MONOSPACE;//字体样式
     public WheelView.DividerType dividerType = WheelView.DividerType.FILL;//分隔线类型
     public int itemsVisibleCount = 9; //最大可见条目数
     public boolean isAlphaGradient = false; //透明度渐变
-    public boolean isOuterTextScale = true; //非中间文字是否压扁形成3d错觉
+    public boolean isOuterTextScale = true; //非中间文字是否压扁形成3D错觉
 }

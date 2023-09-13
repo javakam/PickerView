@@ -139,6 +139,16 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder setAlphaGradient(boolean isAlphaGradient) {
+        mPickerOptions.isAlphaGradient = isAlphaGradient;
+        return this;
+    }
+
+    public OptionsPickerBuilder setOuterTextScale(boolean outerTextScale) {
+        mPickerOptions.isOuterTextScale = outerTextScale;
+        return this;
+    }
+
     public OptionsPickerBuilder setOutSideCancelable(boolean cancelable) {
         mPickerOptions.cancelable = cancelable;
         return this;
@@ -244,6 +254,10 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder setCenterLabelSpacing(float centerLabelSpacing) {
+        mPickerOptions.centerLabelSpacing = centerLabelSpacing;
+        return this;
+    }
 
     /**
      * 设置最大可见数目

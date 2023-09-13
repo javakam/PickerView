@@ -2,11 +2,9 @@
 
 > 🌴自己动手丰衣足食
 
+> 2023年9月13日 17:03:36 v1.8.0 修复原版`isCenterLabel=true`显示异常问题并增加`setCenterLabelSpacing(float)`控制文本和"年月日"等单位的间距
+>
 > 2023年9月7日 17:36:34 v1.7.0 新增`setOuterTextScale(false)`用于关闭非中间字体3D效果
->
-> 2023年8月28日 09:58:38 更新了`app.assets`下的`province.json`文件 ; 更新 dependencies 并升级至 1.6.0
->
-> 2023年5月17日 11:40:00 更新了`app.assets`下的`province.json`文件
 
 > 【注】在使用`地区选择器`时, 如果后台给了地址接口, 建议参照`app.assets`下的`province.json`统一好格式。如果后台没有接口, 可使用
 > Idea打开项目<https://github.com/javakam/GetDistricts>, 执行`GetDistricts.main`方法即可下载最新的`province.json`
@@ -24,12 +22,13 @@ repositories {
 ```
 
 ```groovy
-implementation 'com.github.javakam:widget.wheelview:1.7.0@aar'
-implementation 'com.github.javakam:widget.pickerview:1.7.0@aar'
+implementation 'com.github.javakam:widget.wheelview:1.8.0@aar'
+implementation 'com.github.javakam:widget.pickerview:1.8.0@aar'
 ```
 
 #### 3. 修改内容
 
+- 修复原版`isCenterLabel=true`显示异常问题 ; 增加`setCenterLabelSpacing(float)`控制文本和"年月日"等单位的间距
 - 新增`setOuterTextScale(false)`用于关闭非中间字体3D效果
 - 支持 androidx
 - setPadding(l,t,r,b) 新增内容视图调整上下左右边距

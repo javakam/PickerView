@@ -1015,6 +1015,15 @@ public class WheelTime {
         wv_seconds.isCenterLabel(isCenterLabel);
     }
 
+    public void setCenterLabelSpacing(float centerLabelSpacing) {
+        wv_day.setCenterLabelSpacing(centerLabelSpacing);
+        wv_month.setCenterLabelSpacing(centerLabelSpacing);
+        wv_year.setCenterLabelSpacing(centerLabelSpacing);
+        wv_hours.setCenterLabelSpacing(centerLabelSpacing);
+        wv_minutes.setCenterLabelSpacing(centerLabelSpacing);
+        wv_seconds.setCenterLabelSpacing(centerLabelSpacing);
+    }
+
     public void setSelectChangeCallback(ISelectTimeCallback mSelectChangeCallback) {
         this.mSelectChangeCallback = mSelectChangeCallback;
     }

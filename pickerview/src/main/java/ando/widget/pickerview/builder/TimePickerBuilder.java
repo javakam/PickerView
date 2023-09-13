@@ -299,6 +299,11 @@ public class TimePickerBuilder {
         return this;
     }
 
+    public TimePickerBuilder setCenterLabelSpacing(float centerLabelSpacing) {
+        mPickerOptions.centerLabelSpacing = centerLabelSpacing;
+        return this;
+    }
+
     /**
      * @param listener 切换item项滚动停止时，实时回调监听。
      */

@@ -324,12 +324,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
-                .setContentTextSize(17)
+                .setContentTextSize(17)//默认18
                 .setType(new boolean[]{true, true, true, true, true, true})//分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
                 .setLabel("年", "月", "日", "时", "分", "秒")
                 .setLineSpacingMultiplier(2.2F)
                 .setTextXOffset(20, 0, 0, 0, 0, -20)
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+
+                //2023年9月13日 16:59:04 v1.8.0 修复原版`isCenterLabel=true`显示异常问题并增加`setCenterLabelSpacing(float)`控制文本和"年月日"等单位的间距
+                //控制"年月日"等单位只在中间显示还是全部条目都显示
+                .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setCenterLabelSpacing(5F) //设置中间文字和单位(label文字)的间距。仅在 isCenterLabel(true) 时生效。
+
                 .isCyclic(false)//是否循环滚动
                 .setDividerColor(0xFF24AD9D)
                 .setPadding(15, 0, 15, 0)

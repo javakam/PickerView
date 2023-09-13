@@ -96,6 +96,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextColorOut(mPickerOptions.textColorOut);
         wheelOptions.setTextColorCenter(mPickerOptions.textColorCenter);
         wheelOptions.isCenterLabel(mPickerOptions.isCenterLabel);
+        wheelOptions.setCenterLabelSpacing(mPickerOptions.centerLabelSpacing);
     }
 
     /**

@@ -51,6 +51,7 @@ public class WheelView extends View {
 
     private boolean isOptions = false;
     private boolean isCenterLabel = true;
+    private float centerLabelSpacing = 0F;
 
     // Timer mTimer;
     @SuppressWarnings("AlibabaThreadPoolCreation")
@@ -393,7 +394,6 @@ public class WheelView extends View {
         try {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
             preCurrentIndex = initPosition + change % adapter.getItemsCount();
-
         } catch (ArithmeticException e) {
             Log.e("WheelView", "出错了！adapter.getItemsCount() == 0，联动数据不匹配");
         }
@@ -457,9 +457,15 @@ public class WheelView extends View {
 
         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
         if (!TextUtils.isEmpty(label) && isCenterLabel) {
-            //绘制文字，靠右并留出空隙
-            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            //绘制文字，靠右并留出空隙 ; 原版 isCenterLabel=true 显示异常问题
+//            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
+//            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            final String centerContentText = getContentText(adapter.getItem(selectedItem));
+            final String centerContentTextLabel = centerContentText + label;
+            reMeasureTextSize(centerContentTextLabel);
+            measuredCenterContentStart(centerContentTextLabel);
+            measuredOutContentStart(centerContentTextLabel);
+            canvas.drawText(label, drawCenterContentStart + getTextWidth(paintCenterText, centerContentText) + centerLabelSpacing, centerY, paintCenterText);
         }
 
         // 设置数组中每个元素的值
@@ -504,10 +510,11 @@ public class WheelView extends View {
                 // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度.
                 float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
 
-                reMeasureTextSize(contentText);
-                //计算开始绘制的位置
-                measuredCenterContentStart(contentText);
-                measuredOutContentStart(contentText);
+                if (TextUtils.isEmpty(label) || !isCenterLabel) {
+                    reMeasureTextSize(contentText);
+                    measuredCenterContentStart(contentText); //计算开始绘制的位置
+                    measuredOutContentStart(contentText);
+                }
                 float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
@@ -614,7 +621,6 @@ public class WheelView extends View {
         //设置2条横线外面的文字大小
         paintOuterText.setTextSize(size);
     }
-
 
     //递归计算出对应的index
     private int getLoopMappingIndex(int index) {
@@ -779,6 +785,10 @@ public class WheelView extends View {
 
     public void isCenterLabel(boolean isCenterLabel) {
         this.isCenterLabel = isCenterLabel;
+    }
+
+    public void setCenterLabelSpacing(float centerLabelSpacing) {
+        this.centerLabelSpacing = centerLabelSpacing;
     }
 
     public void setGravity(int gravity) {
