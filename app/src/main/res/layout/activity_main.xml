@@ -36,6 +36,17 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/btn_CustomTime2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryLight"
+                android:text="@string/picker_custom_time2"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/btn_lunar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

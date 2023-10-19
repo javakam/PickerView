@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import ando.widget.pickerview.listener.OnTimeSelectChangeListener;
 import ando.widget.pickerview.listener.OnTimeSelectListener;
 import ando.widget.pickerview.view.OptionsPickerView;
 import ando.widget.pickerview.view.TimePickerView;
+import ando.widget.wheelview.WheelView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,8 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_Options;
     private Button btn_CustomOptions;
     private Button btn_CustomTime;
+    private Button btn_CustomTime2;
 
-    private TimePickerView pvTime, pvCustomTime, pvCustomLunar;
+    private TimePickerView pvTime, pvCustomTime, pvCustomTime2, pvCustomLunar;
     private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
     private ArrayList<CardBean> cardItem = new ArrayList<>();
 
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initTimePicker();//时间选择器
         initCustomTimePicker();//时间选择器自定义布局
+        initCustomTimePicker2();//时间选择器自定义布局-时分
         initLunarPicker();//公农历切换
         initOptionPicker();//条件选择器
         initCustomOptionPicker();//条件选择器自定义布局
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Options = (Button) findViewById(R.id.btn_Options);
         btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
         btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
+        btn_CustomTime2 = (Button) findViewById(R.id.btn_CustomTime2);
         Button btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
         Button btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
         Button btn_circle = (Button) findViewById(R.id.btn_circle);
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Options.setOnClickListener(this);
         btn_CustomOptions.setOnClickListener(this);
         btn_CustomTime.setOnClickListener(this);
+        btn_CustomTime2.setOnClickListener(this);
         btn_no_linkage.setOnClickListener(this);
         btn_to_Fragment.setOnClickListener(this);
         btn_circle.setOnClickListener(this);
@@ -107,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvCustomOptions.show(); //弹出自定义条件选择器
         } else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
             pvCustomTime.show(); //弹出自定义时间选择器
+        } else if (v.getId() == R.id.btn_CustomTime2 && pvCustomTime2 != null) {
+            pvCustomTime2.show(); //弹出自定义时间选择器-时分
         } else if (v.getId() == R.id.btn_no_linkage && pvNoLinkOptions != null) {//不联动数据选择器
             pvNoLinkOptions.show();
         } else if (v.getId() == R.id.btn_GotoJsonData) {//跳转到 省市区解析示例页面
@@ -327,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentTextSize(17)//默认18
                 .setType(new boolean[]{true, true, true, true, true, true})//分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
                 .setLabel("年", "月", "日", "时", "分", "秒")
-                .setLineSpacingMultiplier(2.2F)
+                .setLineSpacingMultiplier(2F)
                 .setTextXOffset(20, 0, 0, 0, 0, -20)
 
                 //2023年9月13日 16:59:04 v1.8.0 修复原版`isCenterLabel=true`显示异常问题并增加`setCenterLabelSpacing(float)`控制文本和"年月日"等单位的间距
@@ -344,8 +352,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //非中间字体关闭缩放时, 会强制开启颜色渐变, 否则会有文字重叠的问题; 当开启缩放时, !建议!关闭颜色渐变, 显示效果更好
                 .setOuterTextScale(false)//关闭字体3D效果(默认开启) -> PickerOptions.isOuterTextScale
+//                .setOuterTextLineSpacing(20)
                 //.isAlphaGradient(true)//此时内部已强制为 true
 
+                .build();
+    }
+
+    //时间选择器 ，自定义布局 - 时分
+    private void initCustomTimePicker2() {
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2022, 8, 28, 15, 25, 35);//2022-09-28 15:25:35.122
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2035, 2, 5, 11, 22, 33);//非同一天测试通过
+        pvCustomTime2 = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                btn_CustomTime2.setText(getTime(date));
+            }
+        })
+                .setDate(Calendar.getInstance())//系统当前时间
+                //.setRangDate(startDate, endDate)//设置时间范围
+                .setLayoutRes(R.layout.pickerview_custom_time_hour_minute, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime2.returnData();
+                                pvCustomTime2.dismiss();
+                            }
+                        });
+                        ivCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime2.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setContentTextSize(17)//默认18
+                .setType(new boolean[]{false, false, false, true, true, false})//分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏
+                .setLabel("年", "月", "日", "时", "分", "秒")
+                .setLineSpacingMultiplier(2.5F)//拉大该值, 显示的更扁平
+                //控制"年月日"等单位只在中间显示还是全部条目都显示
+                .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setCenterLabelSpacing(15F) //设置中间文字和单位(label文字)的间距。仅在 isCenterLabel(true) 时生效。
+
+                .isCyclic(false)//是否循环滚动
+                .setDividerColor(0xFF24AD9D)
+                .setPadding(30, 0, 30, 0)
+                .setMinHeight(580)
+                .setItemVisibleCount(7)
+                .isDialog(false)//中间弹窗样式
+                .setDividerType(WheelView.DividerType.FILL)
+
+                //非中间字体关闭缩放时, 会强制开启颜色渐变, 否则会有文字重叠的问题; 当开启缩放时, !建议!关闭颜色渐变, 显示效果更好
+                .setOuterTextScale(false)//关闭字体3D效果(默认开启) -> PickerOptions.isOuterTextScale
+//                .setOuterTextLineSpacing(20)
+                //.isAlphaGradient(true)//此时内部已强制为 true
                 .build();
     }
 
