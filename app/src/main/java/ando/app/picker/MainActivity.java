@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isCyclic(false)//是否循环滚动
                 .setDividerColor(0xFF24AD9D)
                 .setPadding(15, 0, 15, 0)
-                .setMinHeight(580)
+                //.setMinHeight(580)
                 .setItemVisibleCount(7)
                 .isDialog(false)//中间弹窗样式
 
@@ -404,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isCyclic(false)//是否循环滚动
                 .setDividerColor(0xFF24AD9D)
                 .setPadding(30, 0, 30, 0)
-                .setMinHeight(580)
+                //.setMinHeight(580)
                 .setItemVisibleCount(7)
                 .isDialog(false)//中间弹窗样式
                 .setDividerType(WheelView.DividerType.FILL)
